@@ -6,7 +6,7 @@ import { findVideos, slugifyTitle, truncateDesimal } from "@/lib/utils";
 
 import { Image, Button } from "@nextui-org/react";
 import { YoutubeModal } from "@/components/YoutubeModal";
-import imdbLogo from "@/assets/imgb.png";
+import imdbLogo from "@/assets/imdb.png";
 
 export const MovieDetails: React.FC<MovieDetailsProps> = ({
   indexMovie,
@@ -66,7 +66,7 @@ export const MovieDetails: React.FC<MovieDetailsProps> = ({
           <Button
             as={Link}
             to={`/movies/${slugifyTitle(highlightMovie?.title ?? "")}`}
-            className="text-lg md:text-xl text-white bg-transparent"
+            className="text-lg md:text-xl text-white bg-transparent hover:opacity-90"
             size="lg"
             radius="sm"
           >
