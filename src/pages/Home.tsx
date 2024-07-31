@@ -1,7 +1,11 @@
-export default function HomePage() {
+import { HeroSection } from "@/components/hero-section/HeroSection";
+
+const HomePage = () => {
   return (
     <>
-      <h1>Home Page</h1>
+      <HeroSection />
     </>
   );
-}
+};
+
+export default HomePage;
