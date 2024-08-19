@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { Video } from "@/types/heroSection";
+import type { Video } from "@/types/heroSection";
+import type { Movie, arrayMovies } from "@/types/filterSection";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -8,6 +9,10 @@ export function cn(...inputs: ClassValue[]) {
 
 export const truncateDesimal = (number: number): string => {
   return number?.toString().substring(0, 3);
+};
+
+export const toDate = (date: string | Date): number => {
+  return new Date(date).getFullYear();
 };
 
 export const slugifyTitle = (title: string) => {
@@ -23,4 +28,25 @@ export const findVideos = (videos?: Video[]): Video | undefined => {
   return videos?.find(
     (video) => video.site === "YouTube" && video.type === "Trailer"
   );
+};
+
+export const filteredSearch = (
+  array: arrayMovies,
+  targetYear: number,
+  desiredGenre: string[] | undefined
+): Movie[] => {
+  return array?.filter((movie) => {
+    const releaseYear = new Date(movie?.release_date).getFullYear();
+
+    const yearFilter = releaseYear > targetYear;
+
+    const genreFilter =
+      !desiredGenre ||
+      desiredGenre?.length === 0 ||
+      movie?.genre_ids?.some((genre) =>
+        desiredGenre?.includes(genre.toString())
+      );
+
+    return yearFilter && genreFilter;
+  });
 };
