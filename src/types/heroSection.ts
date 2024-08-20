@@ -9,6 +9,12 @@ export type MovieItem = {
   title: string;
   poster_path: string;
   vote_average: number;
+  name: string;
+  original_name: string;
+  last_episode_to_air: {
+    episode_number: number;
+  };
+  number_of_seasons: number;
 };
 
 export type BackgroundImageProps = {

@@ -1,11 +1,13 @@
 import { HeroSection } from "@/components/hero-section/HeroSection";
+import CardFilter from "@/components/filter-section/CardFilter";
+import { CardPopularMovies } from "@/components/card-popular/CardPopularMovies";
 
-const HomePage = () => {
+export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <CardFilter />
+      <CardPopularMovies />
     </>
   );
-};
-
-export default HomePage;
+}

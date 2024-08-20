@@ -50,3 +50,17 @@ export const filteredSearch = (
     return yearFilter && genreFilter;
   });
 };
+
+export const shortenedTitle = (title: string) => {
+  if (title?.length > 20) {
+    return title?.substring(0, 20).trim().concat("...");
+  }
+  return title;
+};
+
+export const formatNumbers = (num: number) => {
+  if (num < 10) {
+    return `0${num}`;
+  }
+  return num.toString();
+};
