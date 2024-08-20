@@ -6,6 +6,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { axiosInstance } from "@/lib/axios";
 import { filteredSearch } from "@/lib/utils";
 import { useRegions } from "@/hooks/useRegions";
+import { useDebounce } from "@/hooks/useDebounce";
 import { useGenreMovies, useGenreSeries } from "@/hooks/useGenres";
 import type { FormData } from "@/types/filterSection";
 
@@ -29,16 +30,18 @@ export const useCardFilter = (initialQuery = "") => {
     );
   }, [currentYear]);
 
+  const debouncedQuery = useDebounce(query, 1000);
+
   const { data: searchMovies, isLoading: isLoadingSearch } = useQuery({
-    queryKey: ["search-movie", query],
+    queryKey: ["search-movie", debouncedQuery],
     queryFn: async () => {
-      if (!query) return [];
+      if (!debouncedQuery) return [];
       const response = await axiosInstance.get(
-        `/search/movie?query=${query}&include_adult=false&language=en-US&page=1`
+        `/search/movie?query=${debouncedQuery}&include_adult=false&language=en-US&page=1`
       );
       return response?.data.results;
     },
-    enabled: !!query,
+    enabled: !!debouncedQuery,
   });
 
   const handleGenreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

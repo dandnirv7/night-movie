@@ -1,7 +1,7 @@
 import { Search } from "lucide-react";
 import { Input, Spinner } from "@nextui-org/react";
 
-import { SearchInputProps } from "@/types/filterSection";
+import type { SearchInputProps } from "@/types/filterSection";
 
 const SearchInput: React.FC<SearchInputProps> = ({
   query,

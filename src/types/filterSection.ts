@@ -23,10 +23,10 @@ export type FormData = {
 export type Movies = {
   id: Key | number;
   name: string;
-  poster_path: string;
-  title: string;
-  release_date: string | Date;
-  vote_average: number;
+  poster_path?: string;
+  title?: string;
+  release_date?: string | Date;
+  vote_average?: number;
 };
 
 export type SuggestionCardProps = {
