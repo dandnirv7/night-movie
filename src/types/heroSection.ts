@@ -10,6 +10,7 @@ export type MovieItem = {
   poster_path: string;
   vote_average: number;
   name: string;
+  release_date: string;
   original_name: string;
   last_episode_to_air: {
     episode_number: number;
@@ -46,3 +47,8 @@ export interface Video {
   site: string;
   type: string;
 }
+
+export type CardCarouselProps = {
+  data: MovieItem[];
+  title: string;
+};

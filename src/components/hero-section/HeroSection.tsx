@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useUpcomingMovies } from "@/hooks/useUpcomingMovies";
 
 import { MovieDetails } from "@/components/hero-section/MovieDetails";
 import { GradientOverlay } from "@/components/hero-section/GradientOverlay";
 import { HighlightCard } from "@/components/hero-section/HighlightCard";
 
 import { Spinner } from "@nextui-org/react";
+import { useUpcomingMovies } from "@/features/fetchUpcomingMovies";
 
 export const HeroSection = () => {
   const [indexMovie, setIndexMovie] = useState(0);

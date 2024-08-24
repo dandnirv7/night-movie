@@ -64,3 +64,7 @@ export const formatNumbers = (num: number) => {
   }
   return num.toString();
 };
+
+export const getYear = (date: string) => {
+  return new Date(date).getFullYear();
+};
