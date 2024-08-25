@@ -6,7 +6,9 @@ import type { MovieItemProps } from "@/types/popularSection";
 export const MainMovieDisplay = ({ movie }: MovieItemProps) => {
   return (
     <Link
-      to={`/movies/${slugifyTitle(movie.title ?? "")}`}
+      to={`/series/${slugifyTitle(
+        (movie.title || movie.name || movie.original_name) ?? ""
+      )}`}
       className="w-4/6 md:scale-90 lg:scale-100 lg:order-2 lg:h-full lg:w-1/2"
     >
       <Card>

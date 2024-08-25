@@ -1,5 +1,3 @@
-import type React from "react";
-import type { Key } from "react";
 import type { SuggestionCardProps } from "@/types/filterSection";
 
 import { Link } from "react-router-dom";
@@ -8,10 +6,7 @@ import { slugifyTitle, toDate, truncateDesimal } from "@/lib/utils";
 import { Card, CardBody, Divider, Image } from "@nextui-org/react";
 import { Star } from "lucide-react";
 
-const SuggestionCard: React.FC<SuggestionCardProps> = ({
-  movies,
-  query,
-}: SuggestionCardProps) => {
+const SuggestionCard: React.FC<SuggestionCardProps> = ({ movies, query }) => {
   return (
     <Card className="w-[38%] dark absolute left-10 top-32 z-50 ">
       {movies?.slice(0, 6).map((movie) => (
@@ -28,6 +23,7 @@ const SuggestionCard: React.FC<SuggestionCardProps> = ({
                 {movie.title}
                 <span className="text-xs ml-2">
                   {`( ${toDate(movie.release_date)} )`}
+                  dasdas
                 </span>
               </p>
               <div className="flex flex-row gap-1 items-center">

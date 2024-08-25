@@ -27,11 +27,11 @@ export const MovieDetails: React.FC<MovieDetailsProps> = ({
   return (
     <div className="md:px-5 lg:w-[30%] z-10 md:w-[40%] order-1 hidden md:block">
       <div className="z-10 flex flex-col gap-3 md:gap-6">
-        <h1 className="lg:text-5xl font-extrabold text-4xl">
+        <h1 className="text-4xl font-extrabold lg:text-5xl">
           {highlightMovie?.title || ""}
         </h1>
         <p className="text-md md:text-lg">{highlightMovie?.overview || ""}</p>
-        <ul className="flex flex-row gap-3 items-center grow flex-wrap">
+        <ul className="flex flex-row flex-wrap items-center gap-3 grow">
           {highlightMovie?.genres.map((genre: Genre, index: number) => (
             <li
               key={index}
@@ -41,7 +41,7 @@ export const MovieDetails: React.FC<MovieDetailsProps> = ({
             </li>
           ))}
         </ul>
-        <div className="flex flex-row gap-2 items-center">
+        <div className="flex flex-row items-center gap-2">
           <Image
             loading="lazy"
             src={imdbLogo}
@@ -53,7 +53,7 @@ export const MovieDetails: React.FC<MovieDetailsProps> = ({
             style={{ display: isLoading ? "none" : "block" }}
           />
           {!isLoading && (
-            <h3 className="text-2xl md:text-3xl font-bold">
+            <h3 className="text-2xl font-bold md:text-3xl">
               {truncateDesimal(highlightMovie?.vote_average ?? 0)}/10
             </h3>
           )}
@@ -66,7 +66,7 @@ export const MovieDetails: React.FC<MovieDetailsProps> = ({
           <Button
             as={Link}
             to={`/movies/${slugifyTitle(highlightMovie?.title ?? "")}`}
-            className="text-lg md:text-xl text-white bg-transparent hover:opacity-90"
+            className="text-lg text-white bg-transparent md:text-xl hover:opacity-90"
             size="lg"
             radius="sm"
           >

@@ -35,12 +35,10 @@ export const HighlightCard: React.FC<HighlighMovieProps> = ({
             key={index}
             className="basis-1/3 md:basis-1/2 lg:basis-1/3"
           >
-            <div className="md:p-1">
+            <div>
               <CardUINext
                 shadow="sm"
                 key={index}
-                // isPressable
-                // onPress={() => carouselChange(index)}
                 className={`${index === indexMovie ? "ring-2 ring-white shadow-lg shadow-purple-gem scale-105" : "focus-within::ring-red-50"} mb-5`}
               >
                 <Image
@@ -70,8 +68,6 @@ export const HighlightCard: React.FC<HighlighMovieProps> = ({
                   </Link>
                 </>
               )}
-              {/* <Button size="lg" className="flex items-center">
-              </Button> */}
             </div>
           </CarouselItem>
         ))}

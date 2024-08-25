@@ -27,7 +27,7 @@ const CardFilter = () => {
     <main className="relative">
       <form
         onSubmit={handleSubmit}
-        className="w-full mt-10 px-10 flex lg:flex-row lg:gap-2 justify-center lg:items-center dark flex-col items-start gap-4"
+        className="w-full px-10 flex lg:flex-row lg:gap-2 justify-center lg:items-center dark flex-col items-start gap-4"
       >
         <SearchInput
           query={query}

@@ -30,8 +30,16 @@ export type Movies = {
 };
 
 export type SuggestionCardProps = {
-  movies: Movies[];
+  movies: SuggestionCardItem[];
   query: string;
+};
+
+export type SuggestionCardItem = {
+  id: number;
+  poster_path: string;
+  title: string;
+  release_date: string;
+  vote_average: number;
 };
 
 export type FieldProps = {

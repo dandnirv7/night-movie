@@ -16,7 +16,7 @@ interface DaySelectorProps {
 
 export const DaySelector = ({ today }: DaySelectorProps) => {
   return (
-    <div className="hidden lg:col-span-11 lg:grid lg:grid-cols-1 lg:grid-rows-7 lg:gap-y-4">
+    <div className="hidden lg:w-[10vw] lg:grid lg:grid-cols-1 lg:grid-rows-7 lg:gap-y-4 h-full">
       {days.map((day, index) => (
         <Card
           key={day}

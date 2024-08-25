@@ -2,15 +2,16 @@ import { formatNumbers } from "@/lib/utils";
 import { Card, Image } from "@nextui-org/react";
 import { Link } from "react-router-dom";
 import { shortenedTitle, slugifyTitle } from "@/lib/utils";
-import type { MovieItem } from "@/types/heroSection";
-
-interface MovieCardProps {
-  movie: MovieItem;
-}
+import type { MovieCardProps } from "@/types/heroSection";
 
 export const MovieCard = ({ movie }: MovieCardProps) => {
   return (
-    <Link key={movie.id} to={`/movies/${slugifyTitle(movie.title ?? "")}`}>
+    <Link
+      key={movie.id}
+      to={`/series/${slugifyTitle(
+        (movie.title || movie.name || movie.original_name) ?? ""
+      )}`}
+    >
       <Card className="relative hover:cursor-pointer">
         <Image
           alt={movie.title}

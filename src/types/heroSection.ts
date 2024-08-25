@@ -19,6 +19,10 @@ export type MovieItem = {
   first_air_date: string;
 };
 
+export interface MovieCardProps {
+  movie: MovieItem;
+}
+
 export type BackgroundImageProps = {
   backdropPath: string;
   children: React.ReactNode;
