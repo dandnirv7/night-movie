@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   Modal,
   ModalContent,
@@ -5,24 +6,61 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
-
 import Youtube from "react-youtube";
 
-type youtubeModalProps = {
+type YoutubeModalProps = {
   videoId: string;
   text: string;
 };
 
-export const YoutubeModal = ({ videoId, text }: youtubeModalProps) => {
+export const YoutubeModal = ({ videoId, text }: YoutubeModalProps) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
-  const opts = {
+  const [opts, setOpts] = useState({
     height: "487",
     width: "800",
     playerVars: {
       autoplay: 1,
     },
-  };
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+
+      if (width < 768) {
+        setOpts({
+          height: "203",
+          width: "360",
+          playerVars: {
+            autoplay: 1,
+          },
+        });
+      } else if (width >= 768 && width < 1024) {
+        setOpts({
+          height: "394",
+          width: "700",
+          playerVars: {
+            autoplay: 1,
+          },
+        });
+      } else {
+        setOpts({
+          height: "487",
+          width: "800",
+          playerVars: {
+            autoplay: 1,
+          },
+        });
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const onReady = (event: { target: { playVideo: () => void } }) => {
     event.target.playVideo();
@@ -32,8 +70,7 @@ export const YoutubeModal = ({ videoId, text }: youtubeModalProps) => {
     <div className="z-[99]">
       <Button
         onPress={onOpen}
-        size="lg"
-        className="rounded-sm text-md md:text-lg md:py-6 bg-purple-gem text-white capitalize hover:none"
+        className="text-white capitalize rounded-sm text-md md:text-lg md:py-6 bg-purple-gem hover:none"
       >
         {text}
       </Button>
@@ -47,7 +84,7 @@ export const YoutubeModal = ({ videoId, text }: youtubeModalProps) => {
         placement="center"
         className="relative z-[99] mx-auto"
         classNames={{
-          body: "absolute top-1/2 -translate-y-1/2 translate-x-1/2",
+          body: "flex items-center justify-center min-h-screen",
           backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
           base: "bg-transparent w-full",
         }}

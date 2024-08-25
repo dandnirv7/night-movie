@@ -16,6 +16,7 @@ export type MovieItem = {
     episode_number: number;
   };
   number_of_seasons: number;
+  first_air_date: string;
 };
 
 export type BackgroundImageProps = {
@@ -42,13 +43,14 @@ export interface MovieDetailsProps {
 }
 
 export interface Video {
-  key: string;
-  name: string;
-  site: string;
-  type: string;
+  key?: string;
+  name?: string;
+  site?: string;
+  type?: string;
 }
 
 export type CardCarouselProps = {
+  type: string;
   data: MovieItem[];
   title: string;
 };

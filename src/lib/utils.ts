@@ -18,6 +18,8 @@ export const toDate = (date: string | Date): number => {
 export const slugifyTitle = (title: string) => {
   return title
     ?.toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
     .replace(/[&/\\#,+()$~%.'":*?<>{}]/g, "-")
     .replace(/\s+/g, "-")
     .replace(/--+/g, "-")
