@@ -18,7 +18,7 @@ export const CardPopularMovies = () => {
   const today: number = (new Date().getDay() + 1) % 7;
 
   return (
-    <div className="mx-10">
+    <div>
       <Card className="relative bg-[#202020] min-w-full rounded-3xl md:p-8 p-4">
         <CardBody className="grid grid-flow-row grid-rows-1 lg:grid-flow-col lg:gap-x-4 gap-y-6 lg:place-items-center lg:justify-between">
           <p className="w-full px-5 py-5 font-bold text-center bg-purple-gem rounded-2xl lg:hidden">

@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import type { Video } from "@/types/heroSection";
 import type { Movie, arrayMovies } from "@/types/filterSection";
+import { DetailCrew, SeasonItems } from "@/types/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -69,4 +70,39 @@ export const formatNumbers = (num: number) => {
 
 export const getYear = (date: string) => {
   return new Date(date).getFullYear();
+};
+
+export const formatDate = (dateString?: string) => {
+  if (!dateString) {
+    return "";
+  }
+
+  const date = new Date(dateString);
+
+  if (isNaN(date.getTime())) {
+    return "";
+  }
+
+  const formatter = new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+
+  return formatter.format(date);
+};
+
+export const findDirector = (crews: DetailCrew[] | undefined): DetailCrew[] => {
+  if (!crews) {
+    return [];
+  }
+  const director = crews.find((crew) => crew.job === "Director");
+  return director ? [director] : [];
+};
+
+export const filterSeason = (seasons: SeasonItems[]): SeasonItems[] => {
+  if (!seasons) {
+    return [];
+  }
+  return seasons.filter((season) => season.name.includes("Season"));
 };

@@ -1,9 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "@/components/layouts/Layout";
+import { Cast, DetailCast } from "@/pages/Cast";
 import HomePage from "@/pages/Home";
-import Movies from "@/pages/Movies";
-import Series from "@/pages/Series";
+import { DetailMovie, Movies } from "@/pages/Movies";
 import Search from "@/pages/Search";
+import { DetailSeries, Series } from "@/pages/Series";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 
 export default function App() {
   return (
@@ -17,8 +18,48 @@ export default function App() {
             </Layout>
           }
         />
-        <Route path="/movies/:moviesId" element={<Movies />} />
-        <Route path="/series/:seriesId" element={<Series />} />
+        <Route
+          path="movies"
+          element={
+            <Layout>
+              <Outlet />
+            </Layout>
+          }
+        >
+          <Route index element={<Movies />} />
+          <Route path=":movieId" element={<DetailMovie />} />
+          <Route path="page" element={<Movies />}>
+            <Route path=":pageNumber" element={<Movies />} />
+          </Route>
+        </Route>
+        <Route
+          path="series"
+          element={
+            <Layout>
+              <Outlet />
+            </Layout>
+          }
+        >
+          <Route index element={<Series />} />
+          <Route path=":seriesId" element={<DetailSeries />} />
+          <Route path="page" element={<Series />}>
+            <Route path=":pageNumber" element={<Series />} />
+          </Route>
+        </Route>
+        <Route
+          path="cast"
+          element={
+            <Layout>
+              <Outlet />
+            </Layout>
+          }
+        >
+          <Route index element={<Cast />} />
+          <Route path=":castId" element={<DetailCast />} />
+          <Route path="page" element={<Cast />}>
+            <Route path=":pageNumber" element={<Cast />} />
+          </Route>
+        </Route>
         <Route
           path="/search/:searchMovie"
           element={

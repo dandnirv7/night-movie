@@ -5,6 +5,7 @@ export type HighlighMovieProps = {
 };
 
 export type MovieItem = {
+  profile_path: string;
   id: number;
   title: string;
   poster_path: string;

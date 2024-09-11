@@ -63,7 +63,7 @@ export const HighlightCard: React.FC<HighlighMovieProps> = ({
               </div>
               {index === indexMovie && (
                 <>
-                  <Link to={slugifyTitle(`/movies/${movie?.title}`)}>
+                  <Link to={`/movies/${slugifyTitle(movie?.title)}`}>
                     <span className="text-white text-lg">View Detail</span>
                   </Link>
                 </>

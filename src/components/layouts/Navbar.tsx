@@ -98,7 +98,7 @@ export default function Navbar() {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        <NavbarItem className="hidden md:flex">
+        <NavbarItem className="hidden md:block">
           <Button
             as={Link}
             to="/login"
@@ -109,7 +109,7 @@ export default function Navbar() {
             Login
           </Button>
         </NavbarItem>
-        <NavbarItem className="hidden md:block">
+        <NavbarItem className="hidden lg:block">
           <Button
             as={Link}
             color="secondary"

@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import {
   Modal,
   ModalContent,
@@ -7,6 +6,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import Youtube from "react-youtube";
+import { useYoutube } from "@/hooks/useYoutube";
 
 type YoutubeModalProps = {
   videoId: string;
@@ -15,56 +15,7 @@ type YoutubeModalProps = {
 
 export const YoutubeModal = ({ videoId, text }: YoutubeModalProps) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-
-  const [opts, setOpts] = useState({
-    height: "487",
-    width: "800",
-    playerVars: {
-      autoplay: 1,
-    },
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-
-      if (width < 768) {
-        setOpts({
-          height: "203",
-          width: "360",
-          playerVars: {
-            autoplay: 1,
-          },
-        });
-      } else if (width >= 768 && width < 1024) {
-        setOpts({
-          height: "394",
-          width: "700",
-          playerVars: {
-            autoplay: 1,
-          },
-        });
-      } else {
-        setOpts({
-          height: "487",
-          width: "800",
-          playerVars: {
-            autoplay: 1,
-          },
-        });
-      }
-    };
-
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const onReady = (event: { target: { playVideo: () => void } }) => {
-    event.target.playVideo();
-  };
+  const { opts, onReady } = useYoutube();
 
   return (
     <div className="z-[99]">

@@ -2,12 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios";
 import type { MovieItem } from "@/types/heroSection";
 
-export const useAiringToday = () => {
+export const useAiringToday = (page = 1) => {
   return useQuery({
-    queryKey: ["fetchAiringToday"],
+    queryKey: ["fetchAiringToday", page],
     queryFn: async () => {
       const airingTodayResponse = await axiosInstance.get(
-        "/tv/airing_today?language=en-US&page=1"
+        `/tv/airing_today?language=en-US&page=${page}`
       );
       return airingTodayResponse.data.results;
     },

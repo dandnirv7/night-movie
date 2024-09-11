@@ -1,14 +1,14 @@
 import { axiosInstance } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
 
-export const useNewSeries = () => {
+export const useCreditsMovie = (movieId: number) => {
   return useQuery({
-    queryKey: ["fetchNewSeries"],
+    queryKey: ["credits", movieId],
     queryFn: async () => {
       const response = await axiosInstance.get(
-        "/tv/on_the_air?language=en-US&page=1"
+        `/movie/${movieId}}/credits?language=en-US`
       );
-      return response.data?.results;
+      return response?.data;
     },
   });
 };

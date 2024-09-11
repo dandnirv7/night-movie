@@ -17,7 +17,7 @@ export const HeroSection = () => {
         <Spinner />
       ) : (
         upcomingMovies && (
-          <div className="relative">
+          <div className="relative -mx-10">
             <div
               className="relative min-h-screen min-w-screen bg-cover  bg-no-repeat p-screen-gutter bg-center"
               style={{

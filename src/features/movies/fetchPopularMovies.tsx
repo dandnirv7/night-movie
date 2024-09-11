@@ -1,15 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios";
 
-export const usePopularMovies = () => {
+export const usePopularMovies = (page = 1) => {
   return useQuery({
-    queryKey: ["fetchPopularMovies"],
+    queryKey: ["popularMovies", page],
     queryFn: async () => {
       const popularMoviesResponse = await axiosInstance.get(
-        "/movie/popular?language=en-US&page=1"
+        `/movie/popular?language=en-US&page=${page}`
       );
       return popularMoviesResponse?.data.results;
     },
-    refetchOnWindowFocus: false,
+  });
+};
+
+export const usePopularSeries = (page = 1) => {
+  return useQuery({
+    queryKey: ["popularSeries", page],
+    queryFn: async () => {
+      const popularMoviesResponse = await axiosInstance.get(
+        `/tv/popular?language=en-US&page=${page}`
+      );
+      return popularMoviesResponse?.data.results;
+    },
   });
 };

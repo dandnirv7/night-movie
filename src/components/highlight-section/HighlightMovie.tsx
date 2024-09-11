@@ -28,7 +28,7 @@ export const HighlightMovie: React.FC = () => {
   const videoId = findVideos(highlightMovieVideos)?.key;
 
   return (
-    <div className="relative min-h-screen min-w-screen">
+    <div className="relative min-h-screen min-w-screen -mx-10">
       <div
         className="absolute inset-0 bg-center bg-no-repeat bg-cover"
         style={{
