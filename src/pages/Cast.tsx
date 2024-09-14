@@ -146,6 +146,7 @@ export const DetailCast: React.FC = () => {
                     src={`https://image.tmdb.org/t/p/original/${item.poster_path}`}
                     isZoomed
                     loading="lazy"
+                    className="object-cover"
                   />
                 </Link>
                 <footer>

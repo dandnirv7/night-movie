@@ -3,27 +3,34 @@ import type { SuggestionCardProps } from "@/types/filterSection";
 import { Link } from "react-router-dom";
 import { slugifyTitle, toDate, truncateDesimal } from "@/lib/utils";
 
-import { Card, CardBody, Divider, Image } from "@nextui-org/react";
+import { Card, CardBody, Image } from "@nextui-org/react";
 import { Star } from "lucide-react";
 
 const SuggestionCard: React.FC<SuggestionCardProps> = ({ movies, query }) => {
   return (
-    <Card className="w-[38%] dark absolute left-10 top-32 z-50 ">
+    <Card
+      className="dark absolute w-full top-12  z-50 lg:w-1/4 lg:right-0"
+      radius="none"
+    >
       {movies?.slice(0, 6).map((movie) => (
         <CardBody key={movie.id}>
-          <div className="mb-3 flex flex-row gap-5 items-center ">
+          <div className="pb-3 flex flex-row gap-5 items-center border-b border-zinc-500">
             <Image
               width={60}
-              alt="NextUI hero Image"
+              radius="sm"
+              alt={movie?.title}
               loading="lazy"
               src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`}
+              className="w-full"
             />
-            <Link to={`/movies/${slugifyTitle(movie.title)}`}>
-              <p>
+            <Link
+              to={`/movies/${slugifyTitle(movie.title)}`}
+              className=" overflow-hidden"
+            >
+              <p className="truncate ...">
                 {movie.title}
                 <span className="text-xs ml-2">
                   {`( ${toDate(movie.release_date)} )`}
-                  dasdas
                 </span>
               </p>
               <div className="flex flex-row gap-1 items-center">
@@ -34,7 +41,6 @@ const SuggestionCard: React.FC<SuggestionCardProps> = ({ movies, query }) => {
               </div>
             </Link>
           </div>
-          <Divider />
         </CardBody>
       ))}
       {(movies ?? []).length !== 0 && (

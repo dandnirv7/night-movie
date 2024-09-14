@@ -42,12 +42,11 @@ export const filteredSearch = (
     const releaseYear = new Date(movie?.release_date).getFullYear();
 
     const yearFilter = releaseYear > targetYear;
-
     const genreFilter =
       !desiredGenre ||
-      desiredGenre?.length === 0 ||
+      desiredGenre.length === 0 ||
       movie?.genre_ids?.some((genre) =>
-        desiredGenre?.includes(genre.toString())
+        desiredGenre.includes(genre.toString())
       );
 
     return yearFilter && genreFilter;

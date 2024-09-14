@@ -55,18 +55,18 @@ export const useCardFilter = (initialQuery = "") => {
   const onSubmit = useMemo(
     () => (data: FormData) => {
       const genres = Array.from(data.genre ?? []);
-      const year = data.year || "";
+      const year = data.year ? data.year.toString() : "";
       const region = data.region || "";
 
       const isEmpty = !year && genres.length === 0 && !region;
 
       const filteredMovies = isEmpty
         ? searchMovies
-        : filteredSearch(searchMovies, year, genres);
+        : filteredSearch(searchMovies, parseInt(year, 10), genres);
 
       console.log(filteredMovies);
 
-      const params = {
+      const params: Record<string, string> = {
         ...(query && { q: query }),
         ...(genres.length > 0 && { genre: genres.join("+") }),
         ...(year && { year }),
