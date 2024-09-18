@@ -6,32 +6,43 @@ import { MainMovieDisplay } from "@/components/card-popular/MainMovieDisplay";
 import { MovieCard } from "@/components/card-popular/MovieCard";
 
 export const CardPopularMovies = () => {
-  const { data: airingToday, isLoading: isAiringTodayLoading } =
-    useAiringToday();
-  const { data: detailMovies, isLoading: isDetailMoviesLoading } =
-    useDetailMovies(airingToday);
+  const currentDate = new Date();
+  const formattedDate = new Intl.DateTimeFormat("en-CA").format(currentDate);
+  const currentYear = currentDate.getFullYear();
 
-  if (isAiringTodayLoading || isDetailMoviesLoading) {
+  const todayIndex: number = (new Date().getDay() + 1) % 7;
+
+  const { data: airingTodayData, isLoading: isAiringTodayDataLoading } =
+    useAiringToday(formattedDate, currentYear);
+
+  const { data: movieDetails, isLoading: isMovieDetailsLoading } =
+    useDetailMovies(airingTodayData);
+
+  if (isAiringTodayDataLoading || isMovieDetailsLoading) {
     return <Spinner />;
   }
 
-  const today: number = (new Date().getDay() + 1) % 7;
-
   return (
     <div>
-      <Card className="relative bg-[#202020] min-w-full rounded-3xl md:p-8 p-4">
-        <CardBody className="grid grid-flow-row grid-rows-1 lg:grid-flow-col lg:gap-x-4 gap-y-6 lg:place-items-center lg:justify-between">
-          <p className="w-full px-5 py-5 font-bold text-center bg-purple-gem rounded-2xl lg:hidden">
-            Airing Today
-          </p>
-          <DaySelector today={today} />
-          <div className="flex flex-col items-center gap-y-10 lg:gap-x-5 lg:flex-row justify-center  h-full">
-            <MainMovieDisplay movie={airingToday[0]} />
-            <div className="grid grid-cols-2 grid-rows-2 gap-8 text-center md:grid-cols-3 lg:gap-4 lg:w-9/12 lg:order-1 h-full">
-              {detailMovies
-                ?.slice(1, 7)
-                .map((movie) => <MovieCard key={movie.id} movie={movie} />)}
+      <Card className="relative bg-[#202020] min-w-full rounded-2xl md:rounded-3xl py-2 px-4 md:py-3 md:px-5">
+        <CardBody>
+          <div className="flex flex-col items-center justify-center gap-4 lg:flex-row md:gap-6">
+            <p className="order-1 w-full px-5 py-5 font-bold text-center bg-purple-gem rounded-xl md:rounded-2xl lg:hidden">
+              Airing Today
+            </p>
+            <DaySelector today={todayIndex} />
+            <div className="flex flex-wrap order-3 lg:order-none">
+              {movieDetails?.slice(1, 7).map((movie) => (
+                <div
+                  className="md:w-1/3 w-1/2 p-2.5 md:p-4 lg:p-2.5"
+                  key={movie.id}
+                >
+                  <MovieCard movie={movie} />
+                </div>
+              ))}
             </div>
+
+            <MainMovieDisplay movie={airingTodayData[0]} />
           </div>
         </CardBody>
       </Card>

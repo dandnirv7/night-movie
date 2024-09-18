@@ -2,12 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios";
 import type { MovieItem } from "@/types/heroSection";
 
-export const useAiringToday = (page = 1) => {
+export const useAiringToday = (
+  date: string,
+  year: number,
+  page: number = 1
+) => {
   return useQuery({
-    queryKey: ["fetchAiringToday", page],
+    queryKey: ["fetchAiringToday", page, date],
     queryFn: async () => {
       const airingTodayResponse = await axiosInstance.get(
-        `/tv/airing_today?language=en-US&page=${page}`
+        `/discover/tv?air_date.gte=${date}&first_air_date_year=${year}&include_adult=false&include_null_first_air_dates=false&language=en-US&page=${page}&sort_by=popularity.desc&with_origin_country=KR
+        `
       );
       return airingTodayResponse.data.results;
     },
@@ -21,7 +26,7 @@ export const useDetailMovies = (airingToday: MovieItem[]) => {
       if (!airingToday) return [];
 
       const detailRequests = airingToday.map((movie: MovieItem) =>
-        axiosInstance.get(`/tv/${movie.id}?language=en-US`)
+        axiosInstance.get(`/tv/${movie.id}`)
       );
 
       const detailResponses = await Promise.all(detailRequests);

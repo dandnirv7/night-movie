@@ -1,4 +1,5 @@
 import { Card } from "@nextui-org/react";
+import React from "react";
 
 const days = [
   "saturday",
@@ -14,13 +15,16 @@ interface DaySelectorProps {
   today: number;
 }
 
-export const DaySelector = ({ today }: DaySelectorProps) => {
+export const DaySelector: React.FC<DaySelectorProps> = ({ today }) => {
   return (
-    <div className="hidden lg:w-[10vw] lg:grid lg:grid-cols-1 lg:grid-rows-7 lg:gap-y-4 h-full">
+    <div className="hidden w-1/3 lg:flex lg:flex-col lg:gap-6">
       {days.map((day, index) => (
         <Card
           key={day}
-          className={`${today === index ? "bg-purple-gem" : "bg-charcoal-gray"}  text-white w-full p-5 capitalize font-semibold flex items-center justify-center`}
+          className={`${
+            today === index ? "bg-purple-gem" : "bg-charcoal-gray"
+          } text-white w-full p-4 capitalize font-semibold flex items-center justify-center`}
+          radius="md"
         >
           {day}
         </Card>

@@ -31,7 +31,7 @@ const MovieGrid: React.FC<MovieGridProps> = ({
             : "grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
         } grid-rows-1 gap-3 md:gap-4 lg:gap-6`}
       >
-        {filteredMovies.slice(0, sliceCount).map((item) => (
+        {filteredMovies?.slice(0, sliceCount).map((item) => (
           <li key={item.id} className="grid grid-rows-1 list-none">
             <Link to={`${getBasePath}${slug(item)}`}>
               <Image
