@@ -23,7 +23,7 @@ export const useDiscoverAnime = (page = 1) => {
   };
 
   return useQuery({
-    queryKey: ["anime", page],
+    queryKey: ["discover", "anime", page],
     queryFn: () => fetchDiscover("/discover/tv", params),
     enabled: !!page,
   });
@@ -40,12 +40,51 @@ export const useDiscoverAction = (page = 1) => {
     },
     sort_by: "popularity.desc",
     with_genres: 28,
-    with_origin_country: "US",
+    with_origin_country: "KR|US",
   };
 
   return useQuery({
-    queryKey: ["action", page],
+    queryKey: ["discover", "action", page],
     queryFn: () => fetchDiscover("/discover/movie", params),
+    enabled: !!page,
+  });
+};
+
+export const useDiscoverKoreanSeries = (page = 1) => {
+  const params: SeriesApiParams = {
+    first_air_date_year: 2024,
+    include_adult: false,
+    include_null_first_air_dates: false,
+    language: "en-US",
+    page,
+    sort_by: "popularity.desc",
+    with_origin_country: "KR",
+  };
+
+  return useQuery({
+    queryKey: ["discover", "koreanSeries", page],
+    queryFn: () => fetchDiscover("/discover/tv", params),
+    enabled: !!page,
+  });
+};
+
+export const useOnTheAirSeries = (currentDate: string, page = 1) => {
+  const params: SeriesApiParams = {
+    include_adult: false,
+    include_null_first_air_dates: false,
+    language: "en-US",
+    page,
+    sort_by: "first_air_date.desc",
+    with_status: "1|2",
+    with_origin_country: "US|KR",
+    first_air_date: {
+      lte: currentDate,
+    },
+  };
+
+  return useQuery({
+    queryKey: ["discover", "onTheAir", page],
+    queryFn: () => fetchDiscover("/discover/tv", params),
     enabled: !!page,
   });
 };

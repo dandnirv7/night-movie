@@ -1,7 +1,6 @@
 import { formatDate, getYear, slugifyTitle } from "@/lib/utils";
 import type { MovieGridProps } from "@/types/types";
-import { Divider, Image } from "@nextui-org/react";
-import { Link } from "react-router-dom";
+import { Divider, Image, Link } from "@nextui-org/react";
 
 const MovieGrid: React.FC<MovieGridProps> = ({
   type,
@@ -13,16 +12,11 @@ const MovieGrid: React.FC<MovieGridProps> = ({
   const slug = (item: { title: string; name: string; original_name: string }) =>
     slugifyTitle(item.title || item.name || item.original_name);
 
-  const filteredMovies = array?.filter((movie) => {
-    const year = new Date(movie.first_air_date).getFullYear();
-    return year > 2000;
-  });
-
   const getBasePath =
     type === "movies" ? "/movies/" : type === "series" ? "/series/" : "/cast/";
 
   return (
-    <main className="flex-col space-y-10">
+    <main className="flex-col space-y-4">
       {title && <h1 className="text-3xl font-bold">{title}</h1>}
       <ul
         className={`grid h-full ${
@@ -31,9 +25,9 @@ const MovieGrid: React.FC<MovieGridProps> = ({
             : "grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
         } grid-rows-1 gap-3 md:gap-4 lg:gap-6`}
       >
-        {filteredMovies?.slice(0, sliceCount).map((item) => (
+        {array?.slice(0, sliceCount).map((item) => (
           <li key={item.id} className="grid grid-rows-1 list-none">
-            <Link to={`${getBasePath}${slug(item)}`}>
+            <Link href={`${getBasePath}${slug(item)}`}>
               <Image
                 shadow="sm"
                 radius="lg"
@@ -43,12 +37,13 @@ const MovieGrid: React.FC<MovieGridProps> = ({
                     ? `https://image.tmdb.org/t/p/original/${item.profile_path}`
                     : `https://image.tmdb.org/t/p/original/${item.poster_path}`
                 }
+                className="aspect-[3/4] object-cover"
                 isZoomed
                 loading="lazy"
               />
             </Link>
             <h1 className="w-full mt-2 text-xs font-semibold truncate md:text-base hover:text-lavender-orchid">
-              <Link to={`${getBasePath}${slug(item)}`}>
+              <Link href={`${getBasePath}${slug(item)}`} className="text-white">
                 {item.title || item.name || item.original_name || ""}
               </Link>
             </h1>

@@ -35,7 +35,7 @@ const menuItems: MenuItem[] = [
   },
   {
     title: "Actors",
-    path: "/actors",
+    path: "/cast",
     icon: (color) => <User color={color} />,
   },
   {
@@ -92,20 +92,20 @@ export default function Navbar() {
         />
       </NavbarContent>
 
-      <NavbarContent className="sm:hidden pr-3" justify="center">
+      <NavbarContent className="pr-3 sm:hidden" justify="center">
         <NavbarBrand>
           <Link to="/">
-            <p className="font-bold text-2xl text-white hover:opacity-100">
+            <p className="text-2xl font-bold text-white hover:opacity-100">
               NIGHT MOVIE
             </p>
           </Link>
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden gap-4 sm:flex" justify="center">
         <NavbarBrand className="mr-5">
           <Link to="/">
-            <p className="font-bold text-2xl text-white hover:opacity-100">
+            <p className="text-2xl font-bold text-white hover:opacity-100">
               NIGHT MOVIE
             </p>
           </Link>
@@ -122,7 +122,7 @@ export default function Navbar() {
               placeholder="Search ...."
               size="lg"
               radius="sm"
-              className="w-full lg:w-1/4 top-0 lg:absolute lg:right-0"
+              className="top-0 w-full lg:w-1/4 lg:absolute lg:right-0"
               variant="faded"
               endContent={
                 isLoadingSearch ? (
@@ -147,7 +147,7 @@ export default function Navbar() {
             {isSearchVisible ? <X /> : <Search />}
           </button>
           {isSearchVisible && (
-            <div className="absolute -bottom-12 w-full left-0">
+            <div className="absolute left-0 w-full -bottom-12">
               <form onSubmit={handleSubmit}>
                 <Input
                   value={query}
@@ -179,7 +179,7 @@ export default function Navbar() {
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarMenu className="bg-foreground/80 flex items-start pt-5">
+      <NavbarMenu className="flex items-start pt-5 bg-foreground/80">
         {renderMenuItems()}
       </NavbarMenu>
     </NavbarNextUI>

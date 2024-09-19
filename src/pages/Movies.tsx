@@ -23,6 +23,7 @@ import Reviews from "@/components/fragments/Reviews";
 import CardCarousel from "@/components/fragments/CardCarousel";
 import DetailSection from "@/components/detail-pages/DetailSection";
 import DetailCast from "@/components/detail-pages/DetailCast";
+import { useDiscoverAction } from "@/features/fetchDiscover";
 
 export const Movies: React.FC = () => {
   const { pageNumber } = useParams();
@@ -35,12 +36,18 @@ export const Movies: React.FC = () => {
   const { data: upComingMovies, isLoading: isUpComingLoading } =
     useUpcomingMovies(page);
 
+  const { data: actionMovies, isLoading: isActionLoading } =
+    useDiscoverAction(page);
+
   const isLoading =
-    isPopularLoading || isNowPlayingLoading || isUpComingLoading;
+    isPopularLoading ||
+    isNowPlayingLoading ||
+    isUpComingLoading ||
+    isActionLoading;
 
   return (
     <LoadingSpinner isLoading={isLoading}>
-      <main className="flex flex-col items-center p-6 space-y-10 lg:p-10">
+      <main className="flex flex-col items-center p-6 space-y-10 md:py-28 md:px-10">
         <MovieGrid
           type="movies"
           array={popularMovies}
@@ -58,6 +65,12 @@ export const Movies: React.FC = () => {
           type="movies"
           array={nowPlayingMovies}
           title="Latest Movie"
+          sliceCount={18}
+        />
+        <MovieGrid
+          type="movies"
+          array={actionMovies}
+          title="Action Movie"
           sliceCount={18}
         />
         <Pagination type="movies" />
@@ -101,7 +114,7 @@ export const DetailMovie: React.FC = () => {
           <YouTube
             videoId={findVideos(moviesVideos)?.key}
             opts={opts}
-            className="flex items-center justify-center"
+            className="flex items-center justify-center pt-20"
           />
           <DetailSection details={detailMovies} type="movie" />
           <DetailCast

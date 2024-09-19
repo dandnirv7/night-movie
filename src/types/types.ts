@@ -335,14 +335,19 @@ export interface DetailSeriesSectionProps {
 }
 
 export interface SeriesApiParams {
-  first_air_date_year: number;
-  include_adult: boolean;
-  include_null_first_air_dates: boolean;
-  language: string;
-  page: number;
-  sort_by: string;
-  with_genres: number;
-  with_origin_country: string;
+  first_air_date_year?: number;
+  include_adult?: boolean;
+  include_null_first_air_dates?: boolean;
+  language?: string;
+  page?: number;
+  sort_by?: string;
+  with_genres?: number;
+  with_origin_country?: string;
+  with_status?: string;
+  first_air_date?: {
+    gte?: string;
+    lte?: string;
+  };
 }
 
 export interface MovieApiParams {

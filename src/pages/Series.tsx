@@ -8,8 +8,10 @@ import MovieGrid from "@/components/fragments/MovieGrid";
 import Pagination from "@/components/fragments/Pagination";
 import Reviews from "@/components/fragments/Reviews";
 import { useAiringToday } from "@/features/fetchAiringToday";
-import { useOnTheAir } from "@/features/fetchOnTheAir";
-import { usePopularSeries } from "@/features/movies/fetchPopularMovies";
+import {
+  useDiscoverKoreanSeries,
+  useOnTheAirSeries,
+} from "@/features/fetchDiscover";
 import {
   useAllSeasons,
   useCreditsSeries,
@@ -21,56 +23,57 @@ import {
 } from "@/features/series/fetchDetailSeries";
 import { useYoutube } from "@/hooks/useYoutube";
 import { findDirector, findVideos } from "@/lib/utils";
-import { Spinner } from "@nextui-org/react";
 import { useParams } from "react-router-dom";
 import YouTube from "react-youtube";
 
 export const Series = () => {
   const { pageNumber } = useParams();
-
   const page = Number(pageNumber) || 1;
 
-  const { data: popularSeries } = usePopularSeries();
-  const { data: onTheAir, isLoading: isNowPlayingLoading } = useOnTheAir(page);
-  const { data: airingToday } = useAiringToday(page);
+  const currentDate = new Date();
+  const formattedDate = new Intl.DateTimeFormat("en-CA").format(currentDate);
+  const currentYear = currentDate.getFullYear();
 
-  console.log(popularSeries);
+  const { data: popularSeries, isLoading: isPopularLoading } =
+    useDiscoverKoreanSeries();
+
+  const { data: onTheAir, isLoading: isNowPlayingLoading } = useOnTheAirSeries(
+    formattedDate,
+    page
+  );
+
+  const { data: airingToday, isLoading: isAiringLoading } = useAiringToday(
+    formattedDate,
+    currentYear
+  );
+
+  const isLoading = isPopularLoading || isNowPlayingLoading || isAiringLoading;
 
   return (
-    <>
-      {isNowPlayingLoading ? (
-        <Spinner
-          className="w-screen h-screen"
-          label="Loading ..."
-          color="danger"
-          labelColor="danger"
-          size="lg"
+    <LoadingSpinner isLoading={isLoading}>
+      <main className="flex flex-col items-center p-6 space-y-10 md:py-28 md:px-10">
+        <MovieGrid
+          type="series"
+          array={popularSeries}
+          title="Popular Series"
+          sliceCount={15}
+          isPopular
         />
-      ) : (
-        <main className="flex flex-col items-center p-6 space-y-10 lg:p-10">
-          <MovieGrid
-            type="series"
-            array={popularSeries}
-            title="Popular Series"
-            sliceCount={15}
-            isPopular
-          />
-          <MovieGrid
-            type="series"
-            array={airingToday}
-            title="Airing Today"
-            sliceCount={18}
-          />
-          <MovieGrid
-            type="series"
-            array={onTheAir}
-            title="On The Air"
-            sliceCount={18}
-          />
-          <Pagination type="series" />
-        </main>
-      )}
-    </>
+        <MovieGrid
+          type="series"
+          array={airingToday}
+          title="Airing Today"
+          sliceCount={18}
+        />
+        <MovieGrid
+          type="series"
+          array={onTheAir}
+          title="On The Air"
+          sliceCount={18}
+        />
+        <Pagination type="series" />
+      </main>
+    </LoadingSpinner>
   );
 };
 
@@ -106,6 +109,8 @@ export const DetailSeries = () => {
     numberOfSeasons
   );
 
+  console.log(selectedSeriesId);
+
   const isLoading =
     isSearchLoading ||
     isDetailLoading ||
@@ -115,12 +120,10 @@ export const DetailSeries = () => {
     isCreditsLoading ||
     isSeasonsLoading;
 
-  console.log(allSeasons);
-
   return (
     <LoadingSpinner isLoading={isLoading}>
       {searchResults ? (
-        <main className="flex flex-col min-h-screen p-5 gap-14 md:p-10 md:gap-20">
+        <main className="flex flex-col min-h-screen p-5 gap-14 md:px-10 md:py-28 md:gap-20">
           <YouTube
             videoId={findVideos(seriesVideos)?.key}
             opts={opts}
