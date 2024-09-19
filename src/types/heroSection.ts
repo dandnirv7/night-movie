@@ -58,4 +58,5 @@ export type CardCarouselProps = {
   type: string;
   data: MovieItem[];
   title: string;
+  link?: string;
 };

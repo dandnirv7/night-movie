@@ -333,3 +333,27 @@ export interface DetailSeries {
 export interface DetailSeriesSectionProps {
   detailSeries: DetailSeries;
 }
+
+export interface SeriesApiParams {
+  first_air_date_year: number;
+  include_adult: boolean;
+  include_null_first_air_dates: boolean;
+  language: string;
+  page: number;
+  sort_by: string;
+  with_genres: number;
+  with_origin_country: string;
+}
+
+export interface MovieApiParams {
+  include_adult: boolean;
+  include_video: boolean;
+  language: string;
+  page: number;
+  primary_release_date: {
+    gte: string;
+  };
+  sort_by: string;
+  with_genres: number;
+  with_origin_country: string;
+}
