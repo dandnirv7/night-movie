@@ -1,3 +1,6 @@
+import { ForwardRefExoticComponent, SVGProps } from "react";
+import { IconType } from "react-icons";
+
 type Nullable<T> = T | null;
 
 interface Genre {
@@ -121,7 +124,7 @@ export interface ArrayItem {
 export interface MovieGridProps {
   type: string;
   array: ArrayItem[];
-  title: string;
+  title?: string;
   sliceCount: number;
   isPopular?: boolean;
 }
@@ -351,14 +354,49 @@ export interface SeriesApiParams {
 }
 
 export interface MovieApiParams {
-  include_adult: boolean;
-  include_video: boolean;
-  language: string;
-  page: number;
-  primary_release_date: {
-    gte: string;
+  include_adult?: boolean;
+  include_video?: boolean;
+  language?: string;
+  page?: number;
+  primary_release_date?: {
+    gte?: string;
   };
-  sort_by: string;
-  with_genres: number;
-  with_origin_country: string;
+  sort_by?: string;
+  with_genres?: number;
+  with_origin_country?: string;
+}
+
+export interface genre {
+  genreName: Nullable<string>;
+}
+
+export enum GenreType {
+  Action = "Action",
+  Adventure = "Adventure",
+  Animation = "Animation",
+  Comedy = "Comedy",
+  Crime = "Crime",
+  Documentary = "Documentary",
+  Drama = "Drama",
+  Family = "Family",
+  Fantasy = "Fantasy",
+  History = "History",
+  Horror = "Horror",
+  Music = "Music",
+  Mystery = "Mystery",
+  Romance = "Romance",
+  ScienceFiction = "Science Fiction",
+  TVMovie = "TV Movie",
+  Thriller = "Thriller",
+  War = "War",
+  Western = "Western",
+}
+
+export type IconComponent =
+  | IconType
+  | ForwardRefExoticComponent<SVGProps<SVGSVGElement>>;
+
+export interface GenreIcon {
+  genre: GenreType;
+  icon: IconComponent;
 }

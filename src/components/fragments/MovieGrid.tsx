@@ -16,8 +16,16 @@ const MovieGrid: React.FC<MovieGridProps> = ({
     type === "movies" ? "/movies/" : type === "series" ? "/series/" : "/cast/";
 
   return (
-    <main className="flex-col space-y-4">
-      {title && <h1 className="text-3xl font-bold">{title}</h1>}
+    <main className="flex-col space-y-8">
+      {title && (
+        <div className="flex flex-row gap-2">
+          <Divider
+            orientation="horizontal"
+            className="w-1 h-10 rounded-full bg-purple-gem"
+          />
+          <h1 className="text-3xl font-bold capitalize ">{title}</h1>
+        </div>
+      )}
       <ul
         className={`grid h-full ${
           isPopular
@@ -30,7 +38,7 @@ const MovieGrid: React.FC<MovieGridProps> = ({
             <Link href={`${getBasePath}${slug(item)}`}>
               <Image
                 shadow="sm"
-                radius="lg"
+                radius="sm"
                 alt={item.title || item.name || item.original_name || ""}
                 src={
                   type === "cast"
@@ -42,12 +50,15 @@ const MovieGrid: React.FC<MovieGridProps> = ({
                 loading="lazy"
               />
             </Link>
-            <h1 className="w-full mt-2 text-xs font-semibold truncate md:text-base hover:text-lavender-orchid">
-              <Link href={`${getBasePath}${slug(item)}`} className="text-white">
+            <a
+              href={`${getBasePath}${slug(item)}`}
+              className="text-white line-clamp-1 "
+            >
+              <h1 className="mt-2 text-xs font-semibold lg:text-base hover:text-lavender-orchid">
                 {item.title || item.name || item.original_name || ""}
-              </Link>
-            </h1>
-            <p className="text-[.65rem] md:text-sm leading-4 text-white/50">
+              </h1>
+            </a>
+            <p className="text-[.65rem] lg:text-sm leading-4 text-white/50">
               {isPopular
                 ? getYear(item.release_date) ||
                   getYear(item.first_air_date) ||

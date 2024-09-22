@@ -88,3 +88,23 @@ export const useOnTheAirSeries = (currentDate: string, page = 1) => {
     enabled: !!page,
   });
 };
+
+export const useDiscoverMovieByGenres = (
+  with_genres: number,
+  page: number = 1
+) => {
+  const params: MovieApiParams = {
+    include_adult: false,
+    include_video: false,
+    language: "en-US",
+    page,
+    sort_by: "popularity.desc",
+    with_genres,
+    with_origin_country: "KR|US|JP",
+  };
+
+  return useQuery({
+    queryKey: ["discover", "movieWithGenre", with_genres, page],
+    queryFn: () => fetchDiscover("/discover/movie", params),
+  });
+};

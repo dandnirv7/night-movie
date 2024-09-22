@@ -5,6 +5,7 @@ import { DetailMovie, Movies } from "@/pages/Movies";
 import Search from "@/pages/Search";
 import { DetailSeries, Series } from "@/pages/Series";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import { Genre, DetailGenre } from "./pages/Genre";
 
 export default function App() {
   return (
@@ -58,6 +59,22 @@ export default function App() {
           <Route path=":castId" element={<DetailCast />} />
           <Route path="page" element={<Cast />}>
             <Route path=":pageNumber" element={<Cast />} />
+          </Route>
+        </Route>
+
+        <Route
+          path="genre"
+          element={
+            <Layout>
+              <Outlet />
+            </Layout>
+          }
+        >
+          <Route index element={<Genre />} />
+          <Route path=":genreId" element={<DetailGenre />}>
+            <Route path="page" element={<Genre />}>
+              <Route path=":pageNumber" element={<Genre />} />
+            </Route>
           </Route>
         </Route>
         <Route
