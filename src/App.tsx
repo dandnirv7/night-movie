@@ -6,6 +6,7 @@ import Search from "@/pages/Search";
 import { DetailSeries, Series } from "@/pages/Series";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { Genre, DetailGenre } from "./pages/Genre";
+import { DiscoverPage, DetailDiscoverPage } from "./pages/Discover";
 
 export default function App() {
   return (
@@ -60,6 +61,18 @@ export default function App() {
           <Route path="page" element={<Cast />}>
             <Route path=":pageNumber" element={<Cast />} />
           </Route>
+        </Route>
+        <Route
+          path="discover"
+          element={
+            <Layout>
+              <Outlet />
+            </Layout>
+          }
+        >
+          <Route index element={<DiscoverPage />} />
+          <Route path="tv" element={<DetailDiscoverPage />} />
+          <Route path="movie" element={<DetailDiscoverPage />} />
         </Route>
 
         <Route
