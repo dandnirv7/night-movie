@@ -1,14 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { axiosInstance } from "@/lib/axios";
-import type { MovieApiParams, SeriesApiParams } from "@/types/types";
-
-const fetchDiscover = async (
-  endpoint: string,
-  params: SeriesApiParams | MovieApiParams
-) => {
-  const response = await axiosInstance.get(endpoint, { params });
-  return response?.data?.results;
-};
+import fetchDiscover from "./api";
+import type {
+  DiscoverProps,
+  DiscoverResponse,
+  MovieApiParams,
+  SeriesApiParams,
+} from "./types";
 
 export const useDiscoverAnime = (page = 1) => {
   const params: SeriesApiParams = {
@@ -106,5 +103,89 @@ export const useDiscoverMovieByGenres = (
   return useQuery({
     queryKey: ["discover", "movieWithGenre", with_genres, page],
     queryFn: () => fetchDiscover("/discover/movie", params),
+  });
+};
+
+export const useDiscoverMovies: DiscoverProps<DiscoverResponse> = (
+  includeAdult,
+  includeVideo,
+  sortBy,
+  genres,
+  fromRate,
+  toRate,
+  page = "1"
+) => {
+  const params: MovieApiParams = {
+    include_adult: includeAdult,
+    include_video: includeVideo,
+    language: "en-US",
+    page: page,
+    release_date: {
+      gte: "2020-01-01",
+    },
+    sort_by: sortBy,
+    with_origin_country: "KR|US|JP",
+    vote_average: {
+      gte: fromRate,
+      lte: toRate,
+    },
+    with_genres: genres,
+  };
+
+  return useQuery({
+    queryKey: [
+      "discover",
+      "movies",
+      includeAdult,
+      includeVideo,
+      genres,
+      fromRate,
+      toRate,
+      page,
+    ],
+    queryFn: () => fetchDiscover("/discover/movie", params),
+    enabled: !!page,
+  });
+};
+
+export const useDiscoverSeries: DiscoverProps<DiscoverResponse> = (
+  includeAdult,
+  includeNullFirstAirDates,
+  sortBy,
+  genres,
+  fromRate,
+  toRate,
+  page = "1"
+) => {
+  const currentYear = new Date().getFullYear();
+
+  const params: SeriesApiParams = {
+    first_air_date_year: currentYear,
+    include_adult: includeAdult,
+    include_null_first_air_dates: includeNullFirstAirDates,
+    language: "en-US",
+    page,
+    sort_by: sortBy,
+    vote_average: {
+      gte: fromRate,
+      lte: toRate,
+    },
+    with_origin_country: "KR|US|JP",
+    with_genres: genres,
+  };
+
+  return useQuery({
+    queryKey: [
+      "discover",
+      "series",
+      includeAdult,
+      includeNullFirstAirDates,
+      genres,
+      fromRate,
+      toRate,
+      page,
+    ],
+    queryFn: () => fetchDiscover("/discover/tv", params),
+    enabled: !!page,
   });
 };

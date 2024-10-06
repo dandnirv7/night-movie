@@ -1,77 +1,102 @@
-import { Button } from "@/components/ui/button";
-import { MapPin, Calendar } from "lucide-react";
 import { useCardFilter } from "@/hooks/useCardFilter";
-import SuggestionCard from "../SuggestionCard";
-
-import SearchInput from "../fragments/SearchInput";
-import FilterSelect from "../fragments/FilterSelect";
-import GenreSelect from "../fragments/GenreSelect";
+import type { Genre } from "@/types/filterSection";
+import { Button } from "@nextui-org/react";
+import FilterSelect from "./FilterSelect";
+import MovieTypeSelector from "./MovieTypeSelector";
 
 const CardFilter = () => {
   const {
-    control,
-    handleSubmit,
-    selectedGenres,
-    query,
-    setQuery,
-    years,
-    regions,
-    genreMovies,
-    genreSeries,
-    handleGenreChange,
-    isLoadingSearch,
-    searchMovies,
+    onSubmit,
+    generateUrl,
+    selectedType,
+    setSelectedType,
+    dataState,
+    handleValueChange,
+    genreListMovies,
+    genreListSeries,
+    listRate,
+    sortOptions,
+    moreFilters,
   } = useCardFilter();
 
   return (
-    <main className="relative">
+    <main className="w-full p-6 bg-gunmetal rounded-2xl">
       <form
-        onSubmit={handleSubmit}
-        className="w-full px-10 flex lg:flex-row lg:gap-2 justify-center lg:items-center dark flex-col items-start gap-4"
+        onSubmit={onSubmit}
+        className="flex flex-col gap-4 lg:flex lg:flex-row md:gap-8 lg:gap-5 lg:justify-center lg:items-center"
       >
-        <SearchInput
-          query={query}
-          setQuery={setQuery}
-          isLoadingSearch={isLoadingSearch}
+        <MovieTypeSelector
+          selectedType={selectedType}
+          setSelectedType={setSelectedType}
         />
-        <div className="flex flex-row gap-4 lg:gap-2 items-center w-full flex-wrap md:flex-nowrap">
+
+        <FilterSelect
+          placeholder="Genre"
+          value={dataState.genre}
+          onChange={(
+            value: string | string[] | React.ChangeEvent<HTMLSelectElement>
+          ) => handleValueChange(value, "genre")}
+          options={(selectedType === "tvseries"
+            ? genreListSeries ?? []
+            : genreListMovies ?? []
+          ).map((genre: Genre) => ({
+            label: genre.name,
+            value: genre.id.toString(),
+          }))}
+          multiple
+        />
+
+        <section className="flex justify-center gap-2 lg:flex-row lg:gap-3 md:gap-5 lg:items-center">
+          <h1 className="hidden font-semibold lg:block">Rate</h1>
           <FilterSelect
-            field={{ control, name: "year" }}
-            label="Year"
-            options={years?.map((year) => ({ key: year, value: year })) ?? []}
-            icon={<Calendar color="gray" />}
-            isDisabled={!searchMovies}
+            placeholder="From:"
+            value={dataState.fromRate}
+            onChange={(
+              value: string | string[] | React.ChangeEvent<HTMLSelectElement>
+            ) => handleValueChange(value, "fromRate")}
+            options={listRate}
+            isRate
           />
           <FilterSelect
-            field={{ control, name: "region" }}
-            label="Country"
-            options={
-              regions?.map((region) => ({
-                key: region.iso_3166_1,
-                value: region.english_name,
-              })) ?? []
-            }
-            icon={<MapPin color="gray" />}
-            isDisabled={!searchMovies}
+            placeholder="To:"
+            value={dataState.toRate}
+            onChange={(
+              value: string | string[] | React.ChangeEvent<HTMLSelectElement>
+            ) => handleValueChange(value, "toRate")}
+            options={listRate}
+            isRate
           />
-          <GenreSelect
-            field={{ control, name: "genre" }}
-            selectedGenres={selectedGenres}
-            handleGenreChange={handleGenreChange}
-            genreMovies={genreMovies ?? []}
-            genreSeries={genreSeries ?? []}
-            isDisabled={!searchMovies}
-          />
-          <Button
-            type="submit"
-            className="w-full h-28 bg-orange-400 rounded-2xl text-lg hover:bg-orange-400/90"
-            disabled={isLoadingSearch || !searchMovies}
-          >
+        </section>
+
+        <FilterSelect
+          placeholder="Sort By"
+          value={dataState.sortBy}
+          onChange={(
+            value: string | string[] | React.ChangeEvent<HTMLSelectElement>
+          ) => handleValueChange(value, "sortBy")}
+          options={sortOptions}
+        />
+
+        <FilterSelect
+          placeholder="More Filters"
+          value={dataState.moreFilters}
+          onChange={(
+            value: string | string[] | React.ChangeEvent<HTMLSelectElement>
+          ) => handleValueChange(value, "moreFilters")}
+          options={moreFilters}
+          multiple
+        />
+
+        <Button
+          type="submit"
+          radius="sm"
+          className="w-full p-8 text-lg text-white bg-purple-gem hover:bg-purple-gem/90"
+        >
+          <a href={generateUrl()} className="w-full">
             Search
-          </Button>
-        </div>
+          </a>
+        </Button>
       </form>
-      <SuggestionCard movies={searchMovies} query={query} />
     </main>
   );
 };

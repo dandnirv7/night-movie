@@ -1,5 +1,4 @@
 import { HeroSection } from "@/components/hero-section/HeroSection";
-import CardFilter from "@/components/filter-section/CardFilter";
 import { CardPopularMovies } from "@/components/card-popular/CardPopularMovies";
 import CardCarousel from "@/components/fragments/CardCarousel";
 import { HighlightMovie } from "@/components/highlight-section/HighlightMovie";
@@ -8,7 +7,11 @@ import { useUpcomingMovies } from "@/features/fetchUpcomingMovies";
 import { usePopularMovies } from "@/features/movies/fetchPopularMovies";
 import { usePopularCast } from "@/features/fetchCast";
 import { useAiringToday } from "@/features/fetchAiringToday";
-import { useDiscoverAction, useDiscoverAnime } from "@/features/fetchDiscover";
+import {
+  useDiscoverAction,
+  useDiscoverAnime,
+} from "@/features/discover/fetchDiscover";
+import CardFilter from "@/components/filter-section/CardFilter";
 
 export default function HomePage() {
   const currentDate = new Date();
@@ -18,10 +21,12 @@ export default function HomePage() {
   const { data: upcomingMovies } = useUpcomingMovies();
   const { data: popularMovies } = usePopularMovies();
   const { data: newSeries } = useAiringToday(formattedDate, currentYear);
-  const { data: animeList } = useDiscoverAnime();
-  const { data: actionList } = useDiscoverAction();
+  const { data: animeListData } = useDiscoverAnime();
+  const { data: actionListData } = useDiscoverAction();
   const { data: cast } = usePopularCast();
 
+  const animeList = animeListData?.results;
+  const actionList = actionListData?.results;
   return (
     <main className="flex flex-col px-5 gap-y-12 md:gap-y-20 md:px-10">
       <HeroSection />
@@ -48,13 +53,13 @@ export default function HomePage() {
       />
       <CardCarousel
         type="series"
-        data={animeList}
+        data={animeList ?? []}
         title="Anime"
         link="/genre/anime"
       />
       <CardCarousel
         type="series"
-        data={actionList}
+        data={actionList ?? []}
         title="Action"
         link="/genre/action"
       />

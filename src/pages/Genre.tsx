@@ -2,7 +2,7 @@ import LoadingSpinner from "@/components/elements/LoadingSpinner";
 import GenreCard from "@/components/fragments/GenreCard";
 import MovieGrid from "@/components/fragments/MovieGrid";
 import Pagination from "@/components/fragments/Pagination";
-import { useDiscoverMovieByGenres } from "@/features/fetchDiscover";
+import { useDiscoverMovieByGenres } from "@/features/discover/fetchDiscover";
 import { useGenreMovies } from "@/hooks/useGenres";
 import { GenreType } from "@/types/types";
 import { useParams } from "react-router-dom";
@@ -39,10 +39,10 @@ export const DetailGenre: React.FC = () => {
   const selectedId = selectedGenre?.id || 0;
   const page = parseInt(pageNumber || "1");
 
-  const { data: movies, isLoading: isMoviesLoading } = useDiscoverMovieByGenres(
-    selectedId,
-    page
-  );
+  const { data: moviesData, isLoading: isMoviesLoading } =
+    useDiscoverMovieByGenres(selectedId, page);
+
+  const movies = moviesData?.results;
   const isLoading = isGenreLoading || isMoviesLoading;
 
   return (

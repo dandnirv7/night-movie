@@ -23,7 +23,7 @@ import Reviews from "@/components/fragments/Reviews";
 import CardCarousel from "@/components/fragments/CardCarousel";
 import DetailSection from "@/components/detail-pages/DetailSection";
 import DetailCast from "@/components/detail-pages/DetailCast";
-import { useDiscoverAction } from "@/features/fetchDiscover";
+import { useDiscoverAction } from "@/features/discover/fetchDiscover";
 
 export const Movies: React.FC = () => {
   const { pageNumber } = useParams();
@@ -36,8 +36,10 @@ export const Movies: React.FC = () => {
   const { data: upComingMovies, isLoading: isUpComingLoading } =
     useUpcomingMovies(page);
 
-  const { data: actionMovies, isLoading: isActionLoading } =
+  const { data: actionMoviesData, isLoading: isActionLoading } =
     useDiscoverAction(page);
+
+  const actionMovies = actionMoviesData?.results;
 
   const isLoading =
     isPopularLoading ||

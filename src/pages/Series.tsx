@@ -11,7 +11,7 @@ import { useAiringToday } from "@/features/fetchAiringToday";
 import {
   useDiscoverKoreanSeries,
   useOnTheAirSeries,
-} from "@/features/fetchDiscover";
+} from "@/features/discover/fetchDiscover";
 import {
   useAllSeasons,
   useCreditsSeries,
@@ -34,13 +34,13 @@ export const Series = () => {
   const formattedDate = new Intl.DateTimeFormat("en-CA").format(currentDate);
   const currentYear = currentDate.getFullYear();
 
-  const { data: popularSeries, isLoading: isPopularLoading } =
+  const { data: popularSeriesData, isLoading: isPopularLoading } =
     useDiscoverKoreanSeries();
+  const { data: onTheAirData, isLoading: isNowPlayingLoading } =
+    useOnTheAirSeries(formattedDate, page);
 
-  const { data: onTheAir, isLoading: isNowPlayingLoading } = useOnTheAirSeries(
-    formattedDate,
-    page
-  );
+  const popularSeries = popularSeriesData?.results;
+  const onTheAir = onTheAirData?.results;
 
   const { data: airingToday, isLoading: isAiringLoading } = useAiringToday(
     formattedDate,

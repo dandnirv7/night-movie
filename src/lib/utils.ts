@@ -98,3 +98,10 @@ export const filterSeason = (seasons: SeasonItems[]): SeasonItems[] => {
   }
   return seasons.filter((season) => season.name.includes("Season"));
 };
+
+export const replaceCommaWithEncodedPipe = (inputString: string) => {
+  if (!inputString) {
+    return;
+  }
+  return inputString?.replace(/,/g, "%7C");
+};
