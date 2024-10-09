@@ -109,8 +109,6 @@ export const DetailSeries = () => {
     numberOfSeasons
   );
 
-  console.log(selectedSeriesId);
-
   const isLoading =
     isSearchLoading ||
     isDetailLoading ||

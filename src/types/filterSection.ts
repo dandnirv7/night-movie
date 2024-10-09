@@ -2,6 +2,7 @@ import type { ChangeEventHandler, Key, SetStateAction } from "react";
 import type { Control, FieldValues } from "react-hook-form";
 
 export type Movie = {
+  first_air_date: string;
   genre_ids: number[];
   release_date: string;
 };
@@ -30,16 +31,20 @@ export type Movies = {
 };
 
 export type SuggestionCardProps = {
-  movies: SuggestionCardItem[];
+  movies?: SuggestionCardItem[];
   query: string;
 };
 
 export type SuggestionCardItem = {
   id: number;
-poster_path: string;
+  poster_path: string;
   title: string;
   release_date: string;
   vote_average: number;
+  name: string;
+  original_name: string;
+  first_air_date: string;
+  profile_path: string;
 };
 
 export type FieldProps = {

@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import type { Video } from "@/types/heroSection";
 import type { Movie, arrayMovies } from "@/types/filterSection";
 import { DetailCrew, SeasonItems } from "@/types/types";
+import { SuggestionCardItem } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -57,7 +58,7 @@ export const formatNumbers = (num: number) => {
   if (num < 10) {
     return `0${num}`;
   }
-  return num.toString();
+  return num?.toString();
 };
 
 export const getYear = (date: string) => {
@@ -104,4 +105,11 @@ export const replaceCommaWithEncodedPipe = (inputString: string) => {
     return;
   }
   return inputString?.replace(/,/g, "%7C");
+};
+
+export const filteredSuggestions = (suggestions: SuggestionCardItem[] = []) => {
+  return suggestions.filter(
+    ({ media_type, poster_path }) =>
+      media_type !== "person" && poster_path !== null
+  );
 };

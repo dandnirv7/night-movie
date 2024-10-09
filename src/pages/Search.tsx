@@ -1,97 +1,123 @@
-import { toDate, truncateDesimal } from "@/lib/utils";
+import { useSearch } from "@/hooks/useSearch";
+import { slugifyTitle, toDate, truncateDesimal } from "@/lib/utils";
 import { Card, CardBody, Divider, Image, Input, Link } from "@nextui-org/react";
-import { Star, Search as SearchIcon } from "lucide-react";
+import { Search as SearchIcon, Star } from "lucide-react";
+import React, { FormEvent } from "react";
 import { useParams } from "react-router-dom";
-import type { Key } from "react";
-import { useCardFilter } from "@/hooks/useCardFilter";
 
-const Search = () => {
-  const { searchMovie } = useParams();
-  const { searchMovies, setQuery, query } = useCardFilter(searchMovie);
+const Search: React.FC = () => {
+  const { searchMovie } = useParams<{ searchMovie: string }>();
+
+  const { isMediaTypeKey, getMediaType, sortedResults, query, setQuery } =
+    useSearch(searchMovie || "");
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (query) {
+      window.location.href = `/search/${query}`;
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSubmit(e as unknown as FormEvent<HTMLFormElement>);
+    }
+  };
+
+  console.log(sortedResults);
 
   return (
     <div>
-      <main className="p-40 min-w-screen min-h-screen relative dark">
-        {/* <p>search</p> */}
-        <h1 className="border-l-3 border-purple-gem w-full pr-2 text-xl font-semibold">
-          Results found: {searchMovie}
-        </h1>
-        <Input
-          label={
-            <div className="flex gap-2 items-center ">
-              <SearchIcon color="gray" />
-              <span className="text-xl text-neutral-500">Search...</span>
-            </div>
-          }
-          value={query}
-          onValueChange={setQuery}
-          radius="lg"
-          classNames={{
-            base: "w-full lg:w-2/3",
-            label: "text-black/50 dark:text-white/90 mb-4",
-            input: [
-              "bg-charcoal-gray rounded-lg p-2.5 mb-2",
-              "placeholder:text-default-700/50 dark:placeholder:text-white/60",
-            ],
-            inputWrapper: ["shadow-xl", "h-28 flex flex-col px-6"],
-          }}
-          placeholder="Type to search..."
-          // endContent={
-          //   isLoadingSearch && (
-          //     <Spinner size="sm" className="absolute bottom-7 right-10" />
-          //   )
-          // }
-        />
-        <Card className="w-full dark">
-          {searchMovies?.map(
-            (movie: {
-              id: Key | number;
-              poster_path: string;
-              title: string;
-              release_date: string | Date;
-              vote_average: number;
-            }) => (
-              <>
-                <CardBody key={movie.id}>
-                  <div className="mb-3 flex flex-row gap-5 items-center">
+      <main className="relative flex flex-col min-h-screen gap-5 p-5 md:gap-8 md:py-32 md:px-20 lg:p-40 min-w-screen dark">
+        <div className="flex flex-col gap-3">
+          <h1 className="w-full pl-2 text-xl font-semibold border-l-3 border-purple-gem">
+            Results found: {searchMovie}
+          </h1>
+          <Input
+            value={query}
+            onValueChange={setQuery}
+            onKeyDown={handleKeyDown}
+            label={
+              <div className="flex items-center gap-2">
+                <SearchIcon color="gray" />
+                <span className="text-xl text-neutral-500">Search...</span>
+              </div>
+            }
+            radius="sm"
+            classNames={{
+              base: "w-full hidden lg:block",
+              label: "text-black/50 dark:text-white/90 mb-4",
+              input: [
+                "bg-charcoal-gray rounded-lg p-2.5 mb-2",
+                "placeholder:text-default-700/50 dark:placeholder:text-white/60",
+              ],
+              inputWrapper: ["shadow-xl", "h-28 flex flex-col px-6"],
+            }}
+            placeholder="Type to search..."
+          />
+        </div>
+        {sortedResults?.length === 0 ? (
+          <>
+            <h1 className="text-2xl font-semibold md:text-3xl text-zinc-500">
+              Sorry, the film or TV series "Avatar asdasd" is currently not
+              available.
+            </h1>
+          </>
+        ) : (
+          <Card className="w-full dark" radius="sm">
+            {sortedResults.map((searchItem) => (
+              <CardBody key={searchItem.id}>
+                <div className="flex flex-row gap-5 py-2 mb-3">
+                  <div className="relative">
+                    <div className="absolute z-[20] flex justify-end w-full">
+                      <p
+                        className={`bg-${searchItem.media_type === "movie" ? "red" : "green"}-500 w-fit text-xs px-1.5`}
+                      >
+                        {searchItem.media_type === "movie" ? "Movie" : "TV"}
+                      </p>
+                    </div>
                     <Image
-                      width={60}
-                      alt="NextUI hero Image"
+                      alt={searchItem.title || searchItem.name || "unknown"}
                       loading="lazy"
-                      src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`}
+                      src={`https://image.tmdb.org/t/p/original/${searchItem.poster_path}`}
+                      width={100}
+                      radius="none"
+                      isZoomed
+                      className="hover:cursor-pointer"
                     />
-                    <div>
-                      <p>
-                        {movie.title}
-                        <span className="text-xs ml-2">
-                          {`( ${toDate(movie.release_date)} )`}
+                  </div>
+                  <div className="flex flex-col w-full gap-2 md:gap-3">
+                    <Link
+                      href={`/${isMediaTypeKey(searchItem.media_type) ? getMediaType(searchItem.media_type) : "unknown"}/${slugifyTitle(searchItem.title || searchItem.name || "unknown")}`}
+                      className="block space-y-2"
+                    >
+                      <p className="text-sm font-semibold md:text-base">
+                        {searchItem.title || searchItem.name}
+                        <span className="ml-2 font-semibold">
+                          {`(${toDate(searchItem.release_date || searchItem.first_air_date)})`}
                         </span>
                       </p>
-                      <div className="flex flex-row gap-1 items-center">
-                        <Star color="orange" fill="orange" size={20} />
-                        <p className="text-gray-400">
-                          {truncateDesimal(movie.vote_average)}
+                      <div className="flex flex-row items-center gap-1">
+                        <Star
+                          color="orange"
+                          fill="orange"
+                          className="size-5 md:size-5"
+                        />
+                        <p className="text-sm font-semibold text-gray-400 md:text-base">
+                          {truncateDesimal(searchItem.vote_average)}
                         </p>
                       </div>
-                    </div>
+                    </Link>
+                    <p className="text-xs line-clamp-5 md:line-clamp-3 lg:line-clamp-1 md:text-sm text-zinc-500">
+                      {searchItem.overview}
+                    </p>
                   </div>
-                  <Divider />
-                </CardBody>
-              </>
-            )
-          )}
-          {/* <Divider /> */}
-          {(searchMovies ?? []).length !== 0 && (
-            <Link
-              href="/movies"
-              className="mb-5 flex items-center justify-center "
-            >
-              <p className="text-sm italic text-center text-lavender-orchid">
-                View all results
-              </p>
-            </Link>
-          )}
-        </Card>
+                </div>
+                <Divider />
+              </CardBody>
+            ))}
+          </Card>
+        )}
       </main>
     </div>
   );

@@ -110,20 +110,21 @@ export interface DetailCastProps {
 }
 
 export interface ArrayItem {
-  profile_path: string;
-  popularity: number;
-  id: number;
-  poster_path: string;
-  title: string;
-  release_date: string;
-  first_air_date: string;
-  name: string;
-  original_name: string;
+  profile_path?: string;
+  popularity?: number;
+  id?: number;
+  poster_path?: string;
+  title?: string;
+  release_date?: string;
+  first_air_date?: string;
+  name?: string;
+  original_name?: string;
 }
 
 export interface MovieGridProps {
   type: string;
-  array: ArrayItem[];
+  array?: ArrayItem[];
+  // | DiscoverResponse | Result[];
   title?: string;
   sliceCount: number;
   isPopular?: boolean;
@@ -335,35 +336,6 @@ export interface DetailSeries {
 
 export interface DetailSeriesSectionProps {
   detailSeries: DetailSeries;
-}
-
-export interface SeriesApiParams {
-  first_air_date_year?: number;
-  include_adult?: boolean;
-  include_null_first_air_dates?: boolean;
-  language?: string;
-  page?: number;
-  sort_by?: string;
-  with_genres?: number;
-  with_origin_country?: string;
-  with_status?: string;
-  first_air_date?: {
-    gte?: string;
-    lte?: string;
-  };
-}
-
-export interface MovieApiParams {
-  include_adult?: boolean;
-  include_video?: boolean;
-  language?: string;
-  page?: number;
-  primary_release_date?: {
-    gte?: string;
-  };
-  sort_by?: string;
-  with_genres?: number;
-  with_origin_country?: string;
 }
 
 export interface genre {
