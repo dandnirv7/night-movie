@@ -35,7 +35,7 @@ export const HighlightCard: React.FC<HighlighMovieProps> = ({
             key={index}
             className="basis-1/3 md:basis-1/2 lg:basis-1/3"
           >
-            <div>
+            <>
               <CardUINext
                 shadow="sm"
                 key={index}
@@ -50,7 +50,7 @@ export const HighlightCard: React.FC<HighlighMovieProps> = ({
                   className="cursor-pointer"
                 />
               </CardUINext>
-            </div>
+            </>
             <div className="md:hidden flex flex-col items-center justify-center gap-5">
               <h3 className="text-xl font-semibold text-center">
                 {movie?.title}

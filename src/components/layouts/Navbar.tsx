@@ -1,20 +1,16 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import {
-  Input,
-  Navbar as NavbarNextUI,
   NavbarBrand,
   NavbarContent,
-  NavbarItem,
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
-  Spinner,
+  Navbar as NavbarNextUI,
 } from "@nextui-org/react";
-import { Clapperboard, LayoutGrid, Search, Tv, User, X } from "lucide-react";
+import { Clapperboard, LayoutGrid, Tv, User } from "lucide-react";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
-import { useCardFilter } from "@/hooks/useCardFilter";
-import SuggestionCard from "@/components/SuggestionCard";
+import NavbarSearch from "./NavbarSearch";
 
 type MenuItem = {
   title: string;
@@ -46,19 +42,12 @@ const menuItems: MenuItem[] = [
 ];
 
 export default function Navbar() {
-  const { handleSubmit, isLoadingSearch, query, setQuery, searchMovies } =
-    useCardFilter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
   const location = useLocation();
-
-  const toggleSearchVisibility = () => {
-    setIsSearchVisible((prev) => !prev);
-  };
 
   const renderMenuItems = () =>
     menuItems.map((item, index) => {
-      const isActive = location.pathname === item.path;
+      const isActive = location.pathname.includes(item.path);
       const color = isActive ? "#611DBA" : "white";
 
       return (
@@ -114,69 +103,7 @@ export default function Navbar() {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:block">
-          <form onSubmit={handleSubmit}>
-            <Input
-              value={query}
-              onValueChange={setQuery}
-              placeholder="Search ...."
-              size="lg"
-              radius="sm"
-              className="top-0 w-full lg:w-1/4 lg:absolute lg:right-0"
-              variant="faded"
-              endContent={
-                isLoadingSearch ? (
-                  <Spinner size="sm" />
-                ) : query ? (
-                  <Link to={`/search/${query}`}>
-                    <Search color="gray" />
-                  </Link>
-                ) : (
-                  <Search color="gray" />
-                )
-              }
-              classNames={{
-                inputWrapper: "bg-gunmetal focus-visible:ring-0 border-none",
-              }}
-            />
-            <SuggestionCard movies={searchMovies} query={query} />
-          </form>
-        </NavbarItem>
-        <NavbarItem className="lg:hidden">
-          <button onClick={toggleSearchVisibility} className="p-2">
-            {isSearchVisible ? <X /> : <Search />}
-          </button>
-          {isSearchVisible && (
-            <div className="absolute left-0 w-full -bottom-12">
-              <form onSubmit={handleSubmit}>
-                <Input
-                  value={query}
-                  onValueChange={setQuery}
-                  placeholder="Search ...."
-                  size="lg"
-                  radius="none"
-                  endContent={
-                    isLoadingSearch ? (
-                      <Spinner size="sm" />
-                    ) : query ? (
-                      <Link to={`/search/${query}`}>
-                        <Search color="gray" />
-                      </Link>
-                    ) : (
-                      <Search color="gray" />
-                    )
-                  }
-                  variant="faded"
-                  classNames={{
-                    inputWrapper:
-                      "bg-gunmetal focus-visible:ring-0 border-none",
-                  }}
-                />
-                <SuggestionCard movies={searchMovies} query={query} />
-              </form>
-            </div>
-          )}
-        </NavbarItem>
+        <NavbarSearch />
       </NavbarContent>
 
       <NavbarMenu className="flex items-start pt-5 bg-foreground/80">

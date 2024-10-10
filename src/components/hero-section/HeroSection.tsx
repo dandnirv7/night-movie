@@ -17,9 +17,9 @@ export const HeroSection = () => {
         <Spinner />
       ) : (
         upcomingMovies && (
-          <div className="relative -mx-10">
+          <div className="relative">
             <div
-              className="relative min-h-screen min-w-screen bg-cover  bg-no-repeat p-screen-gutter bg-center"
+              className="relative min-h-[calc(100vh+20vh)] max-h-screen min-w-screen bg-cover  bg-no-repeat p-screen-gutter bg-center"
               style={{
                 backgroundImage: `url("https://image.tmdb.org/t/p/original/${upcomingMovies[indexMovie]?.backdrop_path}")`,
               }}

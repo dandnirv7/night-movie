@@ -6,7 +6,7 @@ const DetailCast: React.FC<DetailCastProps> = ({ detailCast, crews }) => {
   const crew = Array.isArray(crews) && crews.length > 0 ? crews[0] : undefined;
 
   return (
-    <section className="flex flex-col items-start justify-center gap-4">
+    <section className="flex flex-col items-start justify-center gap-4 px-5 md:px-10">
       <Accordion
         selectionMode="multiple"
         itemClasses={{

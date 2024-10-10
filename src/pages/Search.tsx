@@ -59,7 +59,7 @@ const Search: React.FC = () => {
         {sortedResults?.length === 0 ? (
           <>
             <h1 className="text-2xl font-semibold md:text-3xl text-zinc-500">
-              Sorry, the film or TV series "Avatar asdasd" is currently not
+              Sorry, the Movie or TV series "{searchMovie}" is currently not
               available.
             </h1>
           </>
@@ -71,7 +71,7 @@ const Search: React.FC = () => {
                   <div className="relative">
                     <div className="absolute z-[20] flex justify-end w-full">
                       <p
-                        className={`bg-${searchItem.media_type === "movie" ? "red" : "green"}-500 w-fit text-xs px-1.5`}
+                        className={`${searchItem.media_type === "movie" ? "bg-red-500" : "bg-green-500"} w-fit text-xs px-1.5`}
                       >
                         {searchItem.media_type === "movie" ? "Movie" : "TV"}
                       </p>

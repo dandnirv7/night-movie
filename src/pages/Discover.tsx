@@ -1,6 +1,5 @@
 import LoadingSpinner from "@/components/elements/LoadingSpinner";
-import MovieGrid from "@/components/fragments/MovieGrid";
-import Pagination from "@/components/fragments/Pagination";
+import MovieGrid, { MovieGridItem } from "@/components/fragments/MovieGrid";
 import {
   useDiscoverMovies,
   useDiscoverSeries,
@@ -24,26 +23,26 @@ const DiscoverPage = () => {
   const { data: discoverSeriesData, isLoading: isLoadingSeries } =
     useDiscoverSeries();
 
-  const discoverMovies = discoverMoviesData?.results || [];
-  const discoverSeries = discoverSeriesData?.results || [];
+  const discoverMovies =
+    (discoverMoviesData?.results as unknown as MovieGridItem[]) || [];
+  const discoverSeries =
+    (discoverSeriesData?.results as unknown as MovieGridItem[]) || [];
 
   const isLoading = isLoadingMovies || isLoadingSeries;
-
-  console.log(discoverMovies);
 
   return (
     <LoadingSpinner isLoading={isLoading}>
       <main className="flex flex-col items-center p-6 space-y-10 md:py-28 md:px-10">
         <MovieGrid
           type="movies"
-          array={discoverMovies}
+          movieGridData={discoverMovies}
           title="Movies"
           sliceCount={20}
           isPopular
         />
         <MovieGrid
           type="series"
-          array={discoverSeries}
+          movieGridData={discoverSeries}
           title="Series"
           sliceCount={20}
           isPopular
@@ -90,8 +89,10 @@ const DetailDiscoverPage = () => {
       page
     );
 
-  const discoverMovies = discoverMoviesData?.results || [];
-  const discoverSeries = discoverSeriesData?.results || [];
+  const discoverMovies =
+    (discoverMoviesData?.results as unknown as MovieGridItem[]) || [];
+  const discoverSeries =
+    (discoverSeriesData?.results as unknown as MovieGridItem[]) || [];
 
   const isLoading = isLoadingMovies || isLoadingSeries;
 
@@ -108,12 +109,11 @@ const DetailDiscoverPage = () => {
             <>
               <MovieGrid
                 type="movies"
-                array={discoverMovies}
+                movieGridData={discoverMovies}
                 title="Movies"
                 sliceCount={20}
                 isPopular
               />
-              <Pagination type="movies" />
             </>
           ) : (
             <div className="h-[50vh] grid place-items-center w-full">
@@ -124,12 +124,11 @@ const DetailDiscoverPage = () => {
           <>
             <MovieGrid
               type="series"
-              array={discoverSeries}
+              movieGridData={discoverSeries}
               title="Series"
               sliceCount={20}
               isPopular
             />
-            <Pagination type="series" />
           </>
         ) : (
           <p>No Series Available.</p>
@@ -139,4 +138,4 @@ const DetailDiscoverPage = () => {
   );
 };
 
-export { DiscoverPage, DetailDiscoverPage };
+export { DetailDiscoverPage, DiscoverPage };

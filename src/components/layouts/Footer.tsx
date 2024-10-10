@@ -2,69 +2,66 @@ import React from "react";
 import {
   FaInstagram,
   FaSquareXTwitter,
-  FaFacebookF,
   FaRegEnvelope,
+  FaLinkedinIn,
 } from "react-icons/fa6";
 
-type FooterItem = {
-  link: string;
+type FooterLink = {
+  label: string;
   icon?: React.ReactNode;
+  url?: string;
 };
 
 const Footer = () => {
-  const footerItems: FooterItem[] = [
+  const footerLinks: FooterLink[] = [
     {
-      link: "Terms Of Use",
+      label: "Terms Of Use",
       icon: <FaInstagram size={"24px"} />,
+      url: "https://instagram.com/dandnirv",
     },
     {
-      link: "Privacy-Policy",
+      label: "Privacy Policy",
       icon: <FaSquareXTwitter size={"24px"} />,
+      url: "https://x.com/dandnirv7",
     },
     {
-      link: "About",
-      icon: <FaFacebookF size={"24px"} />,
+      label: "About",
+      icon: <FaLinkedinIn size={"24px"} />,
+      url: "https://in.com/in/dandnirv/",
     },
     {
-      link: "Blog",
+      label: "Blog",
       icon: <FaRegEnvelope size={"24px"} />,
+      url: "mailto:dandinirpana7@gmail.com",
     },
     {
-      link: "FAQ",
+      label: "FAQ",
     },
   ];
 
   return (
-    <footer className="py-10 px-5 md:px-20 lg:w-1/2 mx-auto">
+    <footer className="px-5 py-10 mx-auto md:px-20 lg:w-1/2">
       <div className="flex flex-col gap-8">
-        <div className="flex flex-wrap justify-start md:justify-center items-center gap-4">
-          {footerItems.map((item, index) => (
+        <div className="flex flex-wrap items-center justify-start gap-4 md:justify-center">
+          {footerLinks.map((link, index) => (
             <ul key={index} className="flex flex-col items-center">
               <li className="font-semibold hover:text-lavender-orchid md:text-lg lg:text-xl hover:cursor-pointer text-md">
-                {item.link}
+                {link.label}
               </li>
             </ul>
           ))}
         </div>
-        <p className="text-md text-gray-400 font-medium lg:text-center lg:text-lg">
-          Welcome to Night Movies, your ultimate destination for high-quality
-          movie streaming. Enjoy our collection of the latest movies, classic
-          films, and your favorite TV series with ease and without interruption.
-          We offer a seamless viewing experience with HD quality and various
-          subtitle options for your convenience. Find a movie that suits your
-          taste from a variety of genres, including action, drama, comedy, and
-          more. Join us now and experience unlimited entertainment at your
-          fingertips!
-        </p>
-        <div className="flex flex-wrap justify-start md:justify-center items-center gap-4">
-          {footerItems.map(
-            (item, index) =>
-              item.icon && (
+        <div className="flex flex-wrap items-center justify-start gap-4 md:justify-center">
+          {footerLinks.map(
+            (link, index) =>
+              link.icon && (
                 <div
                   key={index}
-                  className="h-12 w-12 flex items-center justify-center rounded-full bg-gunmetal"
+                  className="flex items-center justify-center w-12 h-12 rounded-full bg-gunmetal"
                 >
-                  {item.icon}
+                  <a href={link.url} target="_blank" rel="noopener noreferrer">
+                    {link.icon}
+                  </a>
                 </div>
               )
           )}

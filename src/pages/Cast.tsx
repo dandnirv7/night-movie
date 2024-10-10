@@ -32,14 +32,14 @@ export const Cast: React.FC = () => {
       <main className="flex flex-col items-center p-6 space-y-10 md:py-28 md:px-10">
         <MovieGrid
           type="cast"
-          array={trendingCast}
+          movieGridData={trendingCast}
           title="Trending Cast"
           sliceCount={15}
           isPopular
         />
         <MovieGrid
           type="cast"
-          array={popularCast}
+          movieGridData={popularCast}
           title="Popular Cast"
           sliceCount={18}
         />
@@ -70,15 +70,15 @@ export const DetailCast: React.FC = () => {
     }
   };
 
-  if (!data || !data[0]) {
-    return <div>No data available</div>;
+  if (isLoading || !data || !data[0]) {
+    return <LoadingSpinner isLoading={true} />;
   }
 
   const castData = data[0] as CastItems;
 
   return (
     <LoadingSpinner isLoading={isLoading}>
-      <main className="flex flex-col items-center justify-center min-h-screen p-10 space-y-10 lg:flex-row gap-y-10 gap-x-10 bg-gunmetal md:py-28 md:px-10">
+      <main className="flex flex-col items-center justify-center min-h-screen p-10 space-y-10 lg:flex-row gap-y-10 gap-x-10 bg-charcoal-gray md:py-28 md:px-10">
         <section className="lg:w-1/2">
           <Card
             isFooterBlurred
@@ -132,7 +132,7 @@ export const DetailCast: React.FC = () => {
                   />
                 </a>
                 <footer>
-                  <p className="mt-2 text-xs font-semibold truncate w-fit md:text-base hover:text-lavender-orchid">
+                  <p className="mt-2 text-xs font-semibold line-clamp-1 md:text-base hover:text-lavender-orchid">
                     <a href={`${getBasePath(item.media_type)}${slug(item)}`}>
                       {item.title || item.name || item.original_name}
                     </a>

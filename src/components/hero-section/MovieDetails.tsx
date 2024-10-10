@@ -5,7 +5,7 @@ import { useHighlightMovie } from "@/hooks/useHighlightMovie";
 import { findVideos, slugifyTitle, truncateDesimal } from "@/lib/utils";
 
 import { Image, Button } from "@nextui-org/react";
-import { YoutubeModal } from "@/components/YoutubeModal";
+import { YoutubeModal } from "@/components/fragments/YoutubeModal";
 import imdbLogo from "@/assets/imdb.png";
 
 export const MovieDetails: React.FC<MovieDetailsProps> = ({
@@ -30,7 +30,9 @@ export const MovieDetails: React.FC<MovieDetailsProps> = ({
         <h1 className="text-4xl font-extrabold lg:text-5xl">
           {highlightMovie?.title || ""}
         </h1>
-        <p className="text-md md:text-lg">{highlightMovie?.overview || ""}</p>
+        <p className="text-md md:text-lg line-clamp-[8]">
+          {highlightMovie?.overview || ""}
+        </p>
         <ul className="flex flex-row flex-wrap items-center gap-3 grow">
           {highlightMovie?.genres.map((genre: Genre, index: number) => (
             <li

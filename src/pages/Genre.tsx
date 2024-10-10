@@ -1,9 +1,9 @@
 import LoadingSpinner from "@/components/elements/LoadingSpinner";
 import GenreCard from "@/components/fragments/GenreCard";
-import MovieGrid from "@/components/fragments/MovieGrid";
+import MovieGrid, { MovieGridItem } from "@/components/fragments/MovieGrid";
 import Pagination from "@/components/fragments/Pagination";
 import { useDiscoverMovieByGenres } from "@/features/discover/fetchDiscover";
-import { useGenreMovies } from "@/hooks/useGenres";
+import { useGenreMovies } from "@/features/genres/fetchGenres";
 import { GenreType } from "@/types/types";
 import { useParams } from "react-router-dom";
 
@@ -42,14 +42,14 @@ export const DetailGenre: React.FC = () => {
   const { data: moviesData, isLoading: isMoviesLoading } =
     useDiscoverMovieByGenres(selectedId, page);
 
-  const movies = moviesData?.results;
+  const movies = moviesData?.results as unknown as MovieGridItem[];
   const isLoading = isGenreLoading || isMoviesLoading;
 
   return (
     <LoadingSpinner isLoading={isLoading}>
       <main className="flex flex-col items-center justify-center min-h-screen p-10 gap-y-10 md:py-28 md:px-10">
         <MovieGrid
-          array={movies}
+          movieGridData={movies}
           sliceCount={20}
           title={genreId}
           type="movies"

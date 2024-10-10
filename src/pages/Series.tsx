@@ -4,7 +4,7 @@ import DetailSection from "@/components/detail-pages/DetailSection";
 import DetailSeriesSection from "@/components/detail-pages/DetailSeriesSection";
 import LoadingSpinner from "@/components/elements/LoadingSpinner";
 import CardCarousel from "@/components/fragments/CardCarousel";
-import MovieGrid from "@/components/fragments/MovieGrid";
+import MovieGrid, { MovieGridItem } from "@/components/fragments/MovieGrid";
 import Pagination from "@/components/fragments/Pagination";
 import Reviews from "@/components/fragments/Reviews";
 import { useAiringToday } from "@/features/fetchAiringToday";
@@ -39,8 +39,9 @@ export const Series = () => {
   const { data: onTheAirData, isLoading: isNowPlayingLoading } =
     useOnTheAirSeries(formattedDate, page);
 
-  const popularSeries = popularSeriesData?.results;
-  const onTheAir = onTheAirData?.results;
+  const popularSeries =
+    popularSeriesData?.results as unknown as MovieGridItem[];
+  const onTheAir = onTheAirData?.results as unknown as MovieGridItem[];
 
   const { data: airingToday, isLoading: isAiringLoading } = useAiringToday(
     formattedDate,
@@ -54,20 +55,20 @@ export const Series = () => {
       <main className="flex flex-col items-center p-6 space-y-10 md:py-28 md:px-10">
         <MovieGrid
           type="series"
-          array={popularSeries}
+          movieGridData={popularSeries}
           title="Popular Series"
           sliceCount={15}
           isPopular
         />
         <MovieGrid
           type="series"
-          array={airingToday}
+          movieGridData={airingToday}
           title="Airing Today"
           sliceCount={18}
         />
         <MovieGrid
           type="series"
-          array={onTheAir}
+          movieGridData={onTheAir}
           title="On The Air"
           sliceCount={18}
         />
@@ -121,11 +122,11 @@ export const DetailSeries = () => {
   return (
     <LoadingSpinner isLoading={isLoading}>
       {searchResults ? (
-        <main className="flex flex-col min-h-screen p-5 gap-14 md:px-10 md:py-28 md:gap-20">
+        <main className="flex flex-col min-h-screen gap-14 md:py-28 md:gap-20">
           <YouTube
             videoId={findVideos(seriesVideos)?.key}
             opts={opts}
-            className="flex items-center justify-center"
+            className="flex items-center justify-center px-5 md:px-10"
           />
           <DetailSection details={detailSeries} type="series" />
 
@@ -136,7 +137,7 @@ export const DetailSeries = () => {
 
           <DetailSeriesSection detailSeries={detailSeries} />
 
-          <section className="flex flex-col gap-8">
+          <section className="flex flex-col gap-8 px-5 md:px-10">
             <h1 className="text-xl font-semibold md:text-2xl">
               Seasons and Episodes
             </h1>
@@ -145,7 +146,7 @@ export const DetailSeries = () => {
           </section>
 
           <CardCarousel
-            data={relatedSeries}
+            movieData={relatedSeries}
             title="Related Series"
             type="series"
           />

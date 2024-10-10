@@ -23,7 +23,7 @@ export const CardPopularMovies = () => {
   }
 
   return (
-    <div>
+    <div className="px-5 md:px-10">
       <Card className="relative bg-[#202020] min-w-full rounded-2xl md:rounded-3xl py-2 px-4 md:py-3 md:px-5">
         <CardBody>
           <div className="flex flex-col items-center justify-center gap-4 lg:flex-row md:gap-6">

@@ -1,7 +1,5 @@
-import { Link } from "react-router-dom";
-
+import { YoutubeModal } from "@/components/fragments/YoutubeModal";
 import { slugifyTitle } from "@/lib/utils";
-import { YoutubeModal } from "@/components/YoutubeModal";
 import type { MovieActionsProps } from "@/types/highlightSection";
 
 export const MovieActions: React.FC<MovieActionsProps> = ({
@@ -10,10 +8,10 @@ export const MovieActions: React.FC<MovieActionsProps> = ({
 }) => (
   <div className="flex flex-row items-center gap-5">
     <YoutubeModal videoId={videoId ?? ""} text="Play Online" />
-    <Link to={`/movies/${slugifyTitle(title ?? "")}`}>
+    <a href={`/movies/${slugifyTitle(title ?? "")}`}>
       <p className="text-sm md:text-xl text-inherit hover:text-lavender-orchid">
         More Details
       </p>
-    </Link>
+    </a>
   </div>
 );

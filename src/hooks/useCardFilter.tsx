@@ -5,7 +5,7 @@ import type {
 } from "@/components/filter-section/types";
 import { replaceCommaWithEncodedPipe } from "@/lib/utils";
 import { FormEvent, useCallback, useState } from "react";
-import { useGenreMovies, useGenreSeries } from "./useGenres";
+import { useGenreMovies, useGenreSeries } from "../features/genres/fetchGenres";
 
 export const useCardFilter = () => {
   const { data: genreListMovies } = useGenreMovies();

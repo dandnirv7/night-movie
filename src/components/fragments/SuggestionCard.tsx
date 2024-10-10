@@ -17,8 +17,8 @@ const SuggestionCard: React.FC<{
 
   return (
     <Card
-      className="absolute z-50 w-full lg:mt-4 dark top-12 lg:w-1/4 lg:right-0"
-      radius="none"
+      className="absolute w-full lg:mt-4 dark top-12 lg:w-1/4 lg:right-0"
+      radius="sm"
     >
       {filteredSuggestions(suggestions)
         ?.slice(0, 6)
@@ -27,9 +27,10 @@ const SuggestionCard: React.FC<{
             <div className="flex flex-row gap-5 pb-3 border-b border-zinc-500">
               <a
                 href={`/${suggestionItem.media_type}/${slugifyTitle(suggestionItem.title || suggestionItem.name || "unknown")}`}
+                className="flex-shrink-0"
               >
                 <Image
-                  width={80}
+                  width={60}
                   radius="sm"
                   alt={
                     suggestionItem?.title || suggestionItem?.name || "Unknown"
@@ -42,7 +43,7 @@ const SuggestionCard: React.FC<{
                 href={`/${isMediaTypeKey(suggestionItem.media_type) ? getMediaType(suggestionItem.media_type) : "unknown"}/${slugifyTitle(suggestionItem.title || suggestionItem.name || "unknown")}`}
                 className="flex flex-col w-full gap-1 overflow-hidden h-fit"
               >
-                <p className="truncate ...  text-sm">
+                <p className="truncate text-sm">
                   {suggestionItem.name ||
                     suggestionItem.title ||
                     suggestionItem.original_name ||
@@ -51,7 +52,7 @@ const SuggestionCard: React.FC<{
                     {`( ${toDate(suggestionItem.release_date || suggestionItem.first_air_date || "")})`}
                   </span>
                 </p>
-                <div className="flex flex-row items-center gap-1 ">
+                <div className="flex flex-row items-center gap-1">
                   <Star color="orange" fill="orange" size={16} />
                   <p className="text-xs text-gray-400">
                     {truncateDesimal(suggestionItem.vote_average)}
@@ -64,7 +65,7 @@ const SuggestionCard: React.FC<{
       {(suggestions ?? []).length !== 0 && (
         <a
           href={`/search/${query}`}
-          className="flex items-center justify-center mb-5 "
+          className="flex items-center justify-center mb-5"
         >
           <p className="text-sm italic text-center text-lavender-orchid">
             View all results

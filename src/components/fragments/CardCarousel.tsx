@@ -5,7 +5,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { slugifyTitle, truncateDesimal, getYear } from "@/lib/utils";
-import type { CardCarouselProps, MovieItem } from "@/types/heroSection";
+import { CardCarouselProps, MovieItem } from "@/types/cardCarousel";
 
 const getLink = (item: MovieItem, type: string) => {
   const slug = slugifyTitle(item.title || item.name || item.original_name);
@@ -24,12 +24,15 @@ const getLink = (item: MovieItem, type: string) => {
 
 const CardCarousel: React.FC<CardCarouselProps> = ({
   type,
-  data,
+  movieData,
   title,
   link,
 }) => {
+  console.log(movieData);
   return (
-    <main className={`${data?.length === 0 ? "hidden" : "block"}`}>
+    <main
+      className={`${movieData?.length === 0 ? "hidden" : "block"} px-5 md:px-10`}
+    >
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold capitalize md:text-2xl lg:text-4xl">
           {title}
@@ -42,7 +45,7 @@ const CardCarousel: React.FC<CardCarouselProps> = ({
       </div>
       <Carousel className="min-w-full z-[20] mt-8">
         <CarouselContent>
-          {data?.map((item) => (
+          {movieData?.map((item) => (
             <CarouselItem
               key={item.id}
               className="flex flex-col items-center justify-between basis-1/3 md:basis-1/4 lg:basis-1/6"
@@ -109,8 +112,8 @@ const CardCarousel: React.FC<CardCarouselProps> = ({
                       </p>
                     </div>
                     <p className="text-[.65rem] lg:text-sm leading-4 text-white/50">
-                      {getYear(item?.release_date) ||
-                        getYear(item?.first_air_date) ||
+                      {getYear(item.release_date ?? "") ||
+                        getYear(item.first_air_date ?? "") ||
                         "Unknown"}
                     </p>
                   </div>

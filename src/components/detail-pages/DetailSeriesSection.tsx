@@ -7,7 +7,7 @@ const DetailSeriesSection: React.FC<DetailSeriesSectionProps> = ({
   detailSeries,
 }) => {
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-col gap-4 px-5 md:px-10">
       <h1 className="text-xl font-semibold md:text-2xl">Detail Series</h1>
       <DetailItem
         heading="Original Title"

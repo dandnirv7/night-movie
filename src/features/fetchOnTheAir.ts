@@ -6,7 +6,7 @@ export const useOnTheAir = (page = 1) => {
     queryKey: ["onTheAir", page],
     queryFn: async () => {
       const OnTheAirResponse = await axiosInstance.get(
-        `/tv/on_the_air?language=en-US&page=${page}`
+        `/tv/on_the_air?language=en-US&mpage=${page}`
       );
       return OnTheAirResponse?.data.results;
     },

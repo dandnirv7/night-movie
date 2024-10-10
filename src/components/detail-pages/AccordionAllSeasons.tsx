@@ -9,7 +9,7 @@ const AccordionAllSeasons: React.FC<AllSeasonsProps> = ({ allSeasons }) => (
     selectionMode="multiple"
     itemClasses={{
       title: "text-white",
-      base: "bg-black -mx-2",
+      base: "bg-black -mx-2 ",
       content: "bg-gunmetal",
       trigger: "pr-5",
     }}
@@ -87,7 +87,7 @@ const AccordionAllSeasons: React.FC<AllSeasonsProps> = ({ allSeasons }) => (
               ))}
             </>
           ) : (
-            <p className="text-center text-zinc-500 text-sm font-semibold">
+            <p className="text-sm font-semibold text-center text-zinc-500">
               No data available.
             </p>
           )}

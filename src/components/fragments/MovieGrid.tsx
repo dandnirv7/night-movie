@@ -1,15 +1,40 @@
 import { formatDate, getYear, slugifyTitle } from "@/lib/utils";
-import type { MovieGridProps } from "@/types/types";
 import { Divider, Image, Link } from "@nextui-org/react";
+
+export type MovieGridItem = {
+  id: number;
+  title: string;
+  name: string;
+  original_name: string;
+  release_date: string;
+  first_air_date: string;
+  popularity: string;
+  profile_path: string;
+  poster_path: string;
+};
+
+interface MovieGridProps {
+  type: string;
+  movieGridData: MovieGridItem[];
+  title?: string;
+  sliceCount: number;
+  isPopular?: boolean;
+}
+
+type SlugItem = {
+  title: string;
+  name: string;
+  original_name: string;
+};
 
 const MovieGrid: React.FC<MovieGridProps> = ({
   type,
-  array,
+  movieGridData = [],
   title,
   sliceCount,
   isPopular,
 }) => {
-  const slug = (item: { title: string; name: string; original_name: string }) =>
+  const slug = (item: SlugItem) =>
     slugifyTitle(item.title || item.name || item.original_name);
 
   const getBasePath =
@@ -33,7 +58,7 @@ const MovieGrid: React.FC<MovieGridProps> = ({
             : "grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
         } grid-rows-1 gap-3 md:gap-4 lg:gap-6`}
       >
-        {array?.slice(0, sliceCount).map((item) => (
+        {movieGridData?.slice(0, sliceCount).map((item) => (
           <li key={item.id} className="grid grid-rows-1 list-none">
             <Link href={`${getBasePath}${slug(item)}`}>
               <Image

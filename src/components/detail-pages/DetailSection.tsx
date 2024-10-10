@@ -14,7 +14,7 @@ const DetailSection = <T extends Movie | Series>({
       : "Unknown Network";
 
   return (
-    <section className="flex flex-col gap-3 md:gap-6">
+    <section className="flex flex-col gap-3 px-5 md:gap-6 md:px-10">
       <div className="flex flex-row gap-3 md:gap-5">
         <Image
           shadow="sm"
@@ -22,7 +22,7 @@ const DetailSection = <T extends Movie | Series>({
           loading="lazy"
           alt={type === "movie" ? details?.original_title : details?.name}
           src={`https://image.tmdb.org/t/p/original/${details?.poster_path}`}
-          className="w-40 h-40 cursor-pointer md:w-52 md:h-60 object-cover"
+          className="object-cover w-40 h-40 cursor-pointer md:w-52 md:h-60"
         />
         <aside className="flex flex-col w-full gap-2">
           <div>
@@ -61,7 +61,7 @@ const DetailSection = <T extends Movie | Series>({
               </h1>
             </Card>
             <div className="flex flex-col gap-2">
-              <StarList vote_average={details.vote_average} />
+              <StarList vote_average={details?.vote_average} />
               <div className="flex flex-row gap-1">
                 <FaUserCircle />
                 <p className="text-xs text-zinc-400">

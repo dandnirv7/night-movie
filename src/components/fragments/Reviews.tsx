@@ -6,11 +6,10 @@ import { FaUserCircle } from "react-icons/fa";
 
 const Reviews: React.FC<ReviewsProps> = ({ reviews }) => {
   return (
-    <section className="flex flex-col gap-4">
-      {!!reviews.length && (
+    <section className="flex flex-col gap-4 px-5 md:px-10">
+      {!!reviews?.length && (
         <>
           <h1 className="text-2xl font-semibold">Reviews</h1>
-
           <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 md:gap-4">
             {reviews?.slice(0, 6).map((review) => (
               <li key={review?.id}>

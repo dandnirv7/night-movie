@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios";
-
-import type { Genre } from "@/types/filterSection";
+import { Genre } from "./types";
 
 export const useGenreMovies = () => {
   return useQuery<Genre[]>({

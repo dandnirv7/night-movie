@@ -6,7 +6,7 @@ export const MainMovieDisplay = ({ movie }: MovieItemProps) => {
   return (
     <Link
       href={`/series/${slugifyTitle(movie.title || movie.name || movie.original_name || "")}`}
-      className="order-2 p-2 lg:p-0"
+      className="order-2 p-2 lg:p-0 lg:w-[90%]"
     >
       <Image
         alt={movie.title}

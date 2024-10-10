@@ -6,7 +6,7 @@ export const BackgroundImage: React.FC<BackgroundImageProps> = ({
   children,
 }) => (
   <div
-    className="min-h-screen min-w-screen bg-cover bg-no-repeat p-screen-gutter  "
+    className="min-h-screen bg-no-repeat bg-cover min-w-screen p-screen-gutter"
     style={{
       backgroundImage: `url("https://image.tmdb.org/t/p/original/${backdropPath}")`,
     }}

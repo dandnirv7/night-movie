@@ -2,9 +2,8 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import YouTube from "react-youtube";
 
-import { useNowPlaying } from "@/features/fetchNowPlaying";
 import { useUpcomingMovies } from "@/features/fetchUpcomingMovies";
-import { usePopularMovies } from "@/features/movies/fetchPopularMovies";
+
 import {
   useDetailMovies,
   useMoviesVideos,
@@ -17,13 +16,15 @@ import { useYoutube } from "@/hooks/useYoutube";
 import { findDirector, findVideos } from "@/lib/utils";
 
 import LoadingSpinner from "@/components/elements/LoadingSpinner";
-import MovieGrid from "@/components/fragments/MovieGrid";
+import MovieGrid, { MovieGridItem } from "@/components/fragments/MovieGrid";
 import Pagination from "@/components/fragments/Pagination";
 import Reviews from "@/components/fragments/Reviews";
 import CardCarousel from "@/components/fragments/CardCarousel";
 import DetailSection from "@/components/detail-pages/DetailSection";
 import DetailCast from "@/components/detail-pages/DetailCast";
 import { useDiscoverAction } from "@/features/discover/fetchDiscover";
+import { usePopularMovies } from "@/features/movies/fetchPopularMovies";
+import { useNowPlaying } from "@/features/fetchNowPlaying";
 
 export const Movies: React.FC = () => {
   const { pageNumber } = useParams();
@@ -35,11 +36,10 @@ export const Movies: React.FC = () => {
     useNowPlaying(page);
   const { data: upComingMovies, isLoading: isUpComingLoading } =
     useUpcomingMovies(page);
-
   const { data: actionMoviesData, isLoading: isActionLoading } =
     useDiscoverAction(page);
 
-  const actionMovies = actionMoviesData?.results;
+  const actionMovies = actionMoviesData?.results as unknown as MovieGridItem[];
 
   const isLoading =
     isPopularLoading ||
@@ -52,26 +52,26 @@ export const Movies: React.FC = () => {
       <main className="flex flex-col items-center p-6 space-y-10 md:py-28 md:px-10">
         <MovieGrid
           type="movies"
-          array={popularMovies}
+          movieGridData={popularMovies || []}
           title="Popular Movies"
           sliceCount={15}
           isPopular
         />
         <MovieGrid
           type="movies"
-          array={upComingMovies}
+          movieGridData={upComingMovies || []}
           title="Coming Soon"
           sliceCount={18}
         />
         <MovieGrid
           type="movies"
-          array={nowPlayingMovies}
+          movieGridData={nowPlayingMovies || []}
           title="Latest Movie"
           sliceCount={18}
         />
         <MovieGrid
           type="movies"
-          array={actionMovies}
+          movieGridData={actionMovies || []}
           title="Action Movie"
           sliceCount={18}
         />
@@ -112,11 +112,11 @@ export const DetailMovie: React.FC = () => {
   return (
     <LoadingSpinner isLoading={isLoading}>
       {detailMovies ? (
-        <main className="flex flex-col p-5 gap-14 md:p-10 md:gap-20">
+        <main className="flex flex-col gap-14 md:gap-20">
           <YouTube
             videoId={findVideos(moviesVideos)?.key}
             opts={opts}
-            className="flex items-center justify-center pt-20"
+            className="flex items-center justify-center px-5 pt-8 md:pt-32 md:px-10"
           />
           <DetailSection details={detailMovies} type="movie" />
           <DetailCast
@@ -124,7 +124,7 @@ export const DetailMovie: React.FC = () => {
             crews={findDirector(creditsMovies?.crew) ?? []}
           />
           <CardCarousel
-            data={recommendationsMovies}
+            movieData={recommendationsMovies}
             title="Related Movies"
             type="movies"
           />

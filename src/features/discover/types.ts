@@ -52,6 +52,9 @@ export interface Result {
   name: string;
   vote_average: number;
   vote_count: number;
+  title?: string;
+  release_date?: string;
+  profile_path?: string;
 }
 
 export interface DiscoverResponse {

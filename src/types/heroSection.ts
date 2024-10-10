@@ -1,3 +1,5 @@
+import { Result } from "@/features/discover/types";
+
 export type HighlighMovieProps = {
   movies: [];
   setIndexMovie: React.Dispatch<React.SetStateAction<number>>;
@@ -56,7 +58,7 @@ export interface Video {
 
 export type CardCarouselProps = {
   type: string;
-  data: MovieItem[];
+  data: MovieItem | Result[];
   title: string;
   link?: string;
 };

@@ -28,43 +28,43 @@ export default function HomePage() {
   const animeList = animeListData?.results;
   const actionList = actionListData?.results;
   return (
-    <main className="flex flex-col px-5 gap-y-12 md:gap-y-20 md:px-10">
+    <main className="flex flex-col gap-y-12 md:gap-y-20">
       <HeroSection />
       <CardFilter />
       <CardPopularMovies />
       <CardCarousel
         type="movies"
-        data={upcomingMovies}
+        movieData={upcomingMovies}
         title="New Movies"
         link="/movies"
       />
       <CardCarousel
         type="movies"
-        data={popularMovies}
+        movieData={popularMovies}
         title="The Most Visited"
         link="/movies"
       />
       <HighlightMovie />
       <CardCarousel
         type="series"
-        data={newSeries}
+        movieData={newSeries}
         title="New Series"
         link="/series"
       />
       <CardCarousel
         type="series"
-        data={animeList ?? []}
+        movieData={animeList ?? []}
         title="Anime"
         link="/genre/anime"
       />
       <CardCarousel
-        type="series"
-        data={actionList ?? []}
+        type="movies"
+        movieData={actionList ?? []}
         title="Action"
         link="/genre/action"
       />
       <HighlightMovie />
-      <CardCarousel type="cast" data={cast} title="Cast" link="/cast" />
+      <CardCarousel type="cast" movieData={cast} title="Cast" link="/cast" />
     </main>
   );
 }
