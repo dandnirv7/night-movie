@@ -127,6 +127,7 @@ export const DetailMovie: React.FC = () => {
             movieData={recommendationsMovies}
             title="Related Movies"
             type="movies"
+            link="/movies"
           />
           <Reviews reviews={reviewsMovies} />
         </main>

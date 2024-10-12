@@ -149,6 +149,7 @@ export const DetailSeries = () => {
             movieData={relatedSeries}
             title="Related Series"
             type="series"
+            link="/series"
           />
 
           <Reviews reviews={reviewsSeries} />

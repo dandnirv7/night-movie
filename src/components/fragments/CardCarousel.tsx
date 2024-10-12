@@ -28,7 +28,6 @@ const CardCarousel: React.FC<CardCarouselProps> = ({
   title,
   link,
 }) => {
-  console.log(movieData);
   return (
     <main
       className={`${movieData?.length === 0 ? "hidden" : "block"} px-5 md:px-10`}
@@ -37,11 +36,11 @@ const CardCarousel: React.FC<CardCarouselProps> = ({
         <h1 className="text-xl font-bold capitalize md:text-2xl lg:text-4xl">
           {title}
         </h1>
-        <Link href={link}>
-          <span className="text-sm text-white capitalize md:text-md lg:text-xl hover:text-lavender-orchid">
+        <a href={link}>
+          <span className="cursor-pointer text-sm text-white capitalize md:text-md lg:text-xl hover:text-lavender-orchid">
             View All
           </span>
-        </Link>
+        </a>
       </div>
       <Carousel className="min-w-full z-[20] mt-8">
         <CarouselContent>
