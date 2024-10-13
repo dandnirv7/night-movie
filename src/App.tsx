@@ -1,12 +1,12 @@
-import Layout from "@/components/layouts/Layout";
-import { Cast, DetailCast } from "@/pages/Cast";
-import HomePage from "@/pages/Home";
-import { DetailMovie, Movies } from "@/pages/Movies";
-import Search from "@/pages/Search";
-import { DetailSeries, Series } from "@/pages/Series";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import Layout from "@/components/layouts/Layout";
+import HomePage from "@/pages/Home";
+import { Movies, DetailMovie } from "@/pages/Movies";
+import { Series, DetailSeries } from "@/pages/Series";
+import { Cast, DetailCast } from "@/pages/Cast";
 import { Genre, DetailGenre } from "./pages/Genre";
 import { DiscoverPage, DetailDiscoverPage } from "./pages/Discover";
+import Search from "@/pages/Search";
 
 export default function App() {
   return (
